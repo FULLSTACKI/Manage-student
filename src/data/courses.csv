@@ -1,0 +1,11 @@
+id,name,credits,start_course,end_course
+C001,Calculus,3,2025-09-01,2025-12-15
+C002,Physics,4,2025-09-01,2025-12-15
+C003,Programming,3,2025-09-01,2025-12-15
+C004,Linear Algebra,3,2025-09-01,2025-12-15
+C005,Chemistry,4,2025-09-01,2025-12-15
+C006,Data Structures,4,2025-09-01,2025-12-15
+C007,Economics,3,2025-09-01,2025-12-15
+C008,Introduction to Philosophy,3,2025-09-01,2025-12-15
+C009,Thermodynamics,4,2025-09-01,2025-12-15
+C010,Database Management,3,2025-09-01,2025-12-15

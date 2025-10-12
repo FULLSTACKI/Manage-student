@@ -1,0 +1,21 @@
+id,name,email,birthday,sex
+S001,Nguyen Van A,a@example.com,2000-01-15,M
+S002,Tran Thi B,b@example.com,2001-05-20,F
+S003,Le Van C,c@example.com,1999-07-30,M
+S004,Pham Thi D,d@example.com,2002-03-10,F
+S005,Hoang Van E,e@example.com,2000-11-25,M
+S006,Do Thi F,f@example.com,2003-08-01,F
+S007,Phan Van G,g@example.com,1998-04-12,M
+S008,Vu Thi H,h@example.com,2000-06-28,F
+S009,Dinh Van I,i@example.com,2001-02-18,M
+S010,Bui Thi K,k@example.com,1999-10-05,F
+S011,Ngo Van L,l@example.com,2002-12-03,M
+S012,Ly Thi M,m@example.com,2003-01-22,F
+S013,Trinh Van N,n@example.com,1998-09-17,M
+S014,Chau Thi P,p@example.com,2000-07-09,F
+S015,Duong Van Q,q@example.com,2001-03-07,M
+S016,Dao Thi R,r@example.com,2002-05-14,F
+S017,Dang Van S,s@example.com,1999-11-01,M
+S018,Ho Thi T,t@example.com,2000-04-24,F
+S019,Lam Van U,u@example.com,2003-06-19,M
+S020,Mai Thi V,v@example.com,2001-09-11,F
