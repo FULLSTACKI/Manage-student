@@ -1,0 +1,39 @@
+[
+    {
+        "display_name": "Phân tích dữ liệu tổng hợp",
+        "dimensions": [
+            {
+                "key": "department", 
+                "display": "Theo Khoa",
+                "valid_metrics": ["gpa", "student", "course", "final grade", "sex"] 
+            },
+            {
+                "key": "course", 
+                "display": "Theo Khóa học",
+                "valid_metrics": ["gpa", "student", "final grade", "sex"]
+            }
+        ],
+        "metrics": [
+            {   "key": "gpa",
+                "display": "Điểm GPA",
+                "allowed_agg": ["avg", "max", "min"]
+            },
+            {   "key": "student",
+                "display": "Sĩ số sinh viên",
+                "allowed_agg": ["count"]
+            },
+            {   "key": "sex",
+                "display": "Sĩ số giới tính",
+                "allowed_agg": ["count"]
+            },
+            {   "key":  "course",
+                "display": "Sĩ số khóa học",
+                "allowed_agg": ["count"]
+            },
+            {   "key": "final grade",
+                "display": "Điểm cuối kì",
+                "allowed_agg": ["avg", "max", "min"]
+            }
+        ]
+    }
+]

@@ -1,0 +1,51 @@
+course_id,course_name,credits,department_id,start_course,end_course
+C001,Calculus,3,D001,2025-09-01,2025-12-15
+C002,Physics,4,D004,2025-09-01,2025-12-15
+C003,Programming,3,D001,2025-09-01,2025-12-15
+C004,Linear Algebra,3,D001,2025-09-01,2025-12-15
+C005,Chemistry,4,D003,2025-09-01,2025-12-15
+C006,Data Structures,4,D001,2025-09-01,2025-12-15
+C007,Economics,3,D002,2025-09-01,2025-12-15
+C008,Introduction to Philosophy,3,D006,2025-09-01,2025-12-15
+C009,Thermodynamics,4,D003,2025-09-01,2025-12-15
+C010,Database Management,3,D001,2025-09-01,2025-12-15
+C011,Object-Oriented Programming,4,D001,2025-09-01,2025-12-15
+C012,Web Development,3,D001,2025-09-01,2025-12-15
+C013,Computer Networks,4,D001,2025-09-01,2025-12-15
+C014,Artificial Intelligence,4,D001,2025-09-01,2025-12-15
+C015,Principles of Marketing,3,D010,2025-09-01,2025-12-15
+C016,Digital Marketing,3,D010,2025-09-01,2025-12-15
+C017,Consumer Behavior,3,D010,2025-09-01,2025-12-15
+C018,Principles of Accounting,3,D005,2025-09-01,2025-12-15
+C019,Auditing,4,D005,2025-09-01,2025-12-15
+C020,Financial Reporting,4,D005,2025-09-01,2025-12-15
+C021,Corporate Finance,3,D009,2025-09-01,2025-12-15
+C022,Investment Analysis,4,D009,2025-09-01,2025-12-15
+C023,International Finance,3,D009,2025-09-01,2025-12-15
+C024,Statics and Dynamics,4,D003,2025-09-01,2025-12-15
+C025,Fluid Mechanics,4,D003,2025-09-01,2025-12-15
+C026,Digital Circuits,3,D004,2025-09-01,2025-12-15
+C027,Signals and Systems,4,D004,2025-09-01,2025-12-15
+C028,Business Law,3,D002,2025-09-01,2025-12-15
+C029,Human Resource Management,3,D002,2025-09-01,2025-12-15
+C030,Academic Writing,3,D006,2025-09-01,2025-12-15
+C031,British Literature,3,D006,2025-09-01,2025-12-15
+C032,Constitutional Law,4,D007,2025-09-01,2025-12-15
+C033,Criminal Law,4,D007,2025-09-01,2025-12-15
+C034,Hospitality Management,3,D008,2025-09-01,2025-12-15
+C035,Tour Operations Management,3,D008,2025-09-01,2025-12-15
+C036,Software Engineering,4,D001,2025-09-01,2025-12-15
+C037,Machine Learning,4,D001,2025-09-01,2025-12-15
+C038,Tax Accounting,3,D005,2025-09-01,2025-12-15
+C039,Market Research,3,D010,2025-09-01,2025-12-15
+C040,Risk Management,3,D009,2025-09-01,2025-12-15
+C041,Material Science,3,D003,2025-09-01,2025-12-15
+C042,Control Systems,4,D004,2025-09-01,2025-12-15
+C043,Operations Management,3,D002,2025-09-01,2025-12-15
+C044,Public Speaking,3,D006,2025-09-01,2025-12-15
+C045,Civil Law,4,D007,2025-09-01,2025-12-15
+C046,Event Management,3,D008,2025-09-01,2025-12-15
+C047,Cloud Computing,4,D001,2025-09-01,2025-12-15
+C048,Managerial Accounting,3,D005,2025-09-01,2025-12-15
+C049,Brand Management,3,D010,2025-09-01,2025-12-15
+C050,Portfolio Management,4,D009,2025-09-01,2025-12-15
