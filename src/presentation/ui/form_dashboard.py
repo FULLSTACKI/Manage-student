@@ -6,7 +6,7 @@ from pathlib import Path
 from PIL import Image
 import requests
 
-PATH = Path(__file__).parent.parent.parent / "data"
+PATH = Path(__file__).parent.parent.parent / "data/seed"
 api_base = "http://localhost:8000"
 
 st.set_page_config(
@@ -43,7 +43,6 @@ def get_analytic_view():
         
 def Search():
     analytics_views = get_analytic_view()
-    
     if not analytics_views:
         st.error("Không thể tải cấu hình phân tích từ backend.")
     else:
@@ -90,9 +89,30 @@ def Search():
         if st.button("Thực hiện phân tích"):
             request_body = {
                 "dimension": selected_dimension['key'],
-                "metric": selected_metric_key,
-                "aggregation": selected_aggregation
+                "metric": selected_metric_key['key'],
+                "agg": selected_aggregation
             }
+            st.info(request_body)
+            try:
+                url = api_base.rstrip("/") + "/analytic_post"
+                resp = requests.post(url, json=request_body, timeout=60)
+                try:
+                    data = resp.json()
+                    st.info(f"Response JSON: {data}")
+                except ValueError:
+                    st.error(f"Invalid JSON response (status {resp.status_code})")
+                    st.write(resp.text)
+                else:
+                    if resp.status_code == 200 or resp.status_code == 201:
+                        if isinstance(data, list):
+                            st.table(data)
+                        else:
+                            st.error("output không đúng định dạng")
+                    else:
+                        st.error(f"Request failed with status {resp.status_code}")
+                        st.json(data)
+            except requests.exceptions.RequestException as e:
+                st.error(f"Failed to connect to API: {e}")
 
 def Home():
     

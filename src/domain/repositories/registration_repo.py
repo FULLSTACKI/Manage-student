@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.domain.entities.registrations.registration import Registration
+from src.domain.entities.registration import Registration
 
 class IsRegistrationRepo(ABC):
     @abstractmethod

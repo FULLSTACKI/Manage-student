@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from src.domain.entities.students.student_repo import IsStudentRepo
-from src.models.models import Student as StudentModel
-from src.domain.entities.students.student import Student
+from src.domain.repositories import IsStudentRepo
+from src.infrastructure.persistence.models import Student as StudentModel
+from src.domain.entities import Student
 
 def _to_model(entity: Student) -> StudentModel:
     return StudentModel(

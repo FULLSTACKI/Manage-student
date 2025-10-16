@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.domain.entities.scores.score import Score
+from src.domain.entities.score import Score
 
 class IsScoreRepo(ABC):
     @abstractmethod

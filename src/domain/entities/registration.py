@@ -1,6 +1,6 @@
 from datetime import date
-from src.utils.error.exceptions import ValidationError
-from src.app.service.compare_date_service import parse_date
+from src.utils.exceptions import ValidationError
+from src.domain.services.compare_date_service import parse_date
 
 class Registration:
     def __init__(self, student_id: str, course_id: str, registered_at: date = None):

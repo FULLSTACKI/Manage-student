@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
-from src.models.models import Registration
-from src.domain.entities.registrations.registration import Registration
-from src.models.models import Registration as RegistrationModel
-from src.domain.entities.registrations.registration_repo import IsRegistrationRepo
+from src.domain.entities import Registration
+from src.infrastructure.persistence.models import Registration as RegistrationModel
+from src.domain.repositories import IsRegistrationRepo
 
 def _to_model(entity: Registration) -> RegistrationModel:
     return RegistrationModel(

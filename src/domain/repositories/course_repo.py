@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.domain.entities.courses.course import Course
+from src.domain.entities.course import Course
 
 class IsCourseRepo(ABC):
     @abstractmethod

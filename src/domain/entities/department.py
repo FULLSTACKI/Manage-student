@@ -1,4 +1,4 @@
-from src.utils.error.exceptions import ValidationError
+from src.utils.exceptions import ValidationError
 
 class Department:
     def __init__(self, department_id: str, department_name: str):

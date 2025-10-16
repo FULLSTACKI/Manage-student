@@ -31,7 +31,7 @@ def upload_score():
             }
 
             try:
-                url = api_base.rstrip("/") + "/upload_score"
+                url = api_base.rstrip("/") + "/Scores"
                 resp = requests.post(url, json=payload, timeout=10)
                 try:
                     data = resp.json()
@@ -80,7 +80,7 @@ def upload_student():
             st.info(f"Payload: {payload}")
 
             try:
-                url = api_base.rstrip("/") + "/upload_student"
+                url = api_base.rstrip("/") + "/Students"
                 resp = requests.post(url, json=payload, timeout=10)
                 try:
                     data = resp.json()
@@ -126,7 +126,7 @@ def upload_course():
             }
 
             try:
-                url = api_base.rstrip("/") + "/upload_course"
+                url = api_base.rstrip("/") + "/Courses"
                 resp = requests.post(url, json=payload, timeout=10)
                 try:
                     data = resp.json()

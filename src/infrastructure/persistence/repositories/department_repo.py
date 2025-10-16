@@ -1,11 +1,11 @@
 from sqlalchemy.orm import Session
-from src.models.models import Department as DepartmentModel
-from src.domain.entities.department.department_repo import IsDepartmentRepo
-from src.domain.entities.department.department import Department
+from src.infrastructure.persistence.models import Department as DepartmentModel
+from src.domain.repositories import IsDepartmentRepo
+from src.domain.entities import Department
 from sqlalchemy.exc import IntegrityError
 from typing import *
 from sqlalchemy import text
-from src.domain.dtos.dtos import *
+from src.domain.entities.dtos import *
 
 def _to_model(entity: Department) -> DepartmentModel:
     return DepartmentModel(
@@ -46,7 +46,7 @@ class DepartmentRepo(IsDepartmentRepo):
     def get_min_final_grade_by_department(self):
         try: 
             query = text(
-                """""
+                """
                     SELECT 
                         d.department_name,
                         MIN(s.final_grade) as min_final_grade
@@ -55,7 +55,7 @@ class DepartmentRepo(IsDepartmentRepo):
                     JOIN scores as s ON s.course_id = c.course_id 
                     GROUP BY d.department_name
                     ORDER BY min_final_grade
-                """""
+                """
             )
             result = self.db.execute(query)
             data_row = result.mappings().all()
@@ -66,7 +66,7 @@ class DepartmentRepo(IsDepartmentRepo):
     def get_max_final_grade_by_department(self):
         try: 
             query = text(
-                """""
+                """
                     SELECT 
                         d.department_name,
                         MAX(s.final_grade) as max_final_grade
@@ -75,7 +75,7 @@ class DepartmentRepo(IsDepartmentRepo):
                     JOIN scores as s ON s.course_id = c.course_id 
                     GROUP BY d.department_name
                     ORDER BY max_final_grade DESC
-                """""
+                """
             )
             result = self.db.execute(query)
             data_row = result.mappings().all()
@@ -106,7 +106,7 @@ class DepartmentRepo(IsDepartmentRepo):
     def get_min_gpa_by_department(self) -> List[DepartmentCourseMinGpaDTO]:
         try: 
             query = text(
-                """""
+                """
                     SELECT 
                         d.department_name,
                         MIN(s.gpa) as min_gpa
@@ -115,7 +115,7 @@ class DepartmentRepo(IsDepartmentRepo):
                     JOIN scores as s ON s.course_id = c.course_id 
                     GROUP BY d.department_name
                     ORDER BY min_gpa 
-                """""
+                """
             )
             result = self.db.execute(query)
             data_row = result.mappings().all()
@@ -126,7 +126,7 @@ class DepartmentRepo(IsDepartmentRepo):
     def get_max_gpa_by_department(self) -> List[DepartmentCourseMaxGpaDTO]:
         try: 
             query = text(
-                """""
+                """
                     SELECT 
                         d.department_name,
                         MAX(s.gpa) as max_gpa
@@ -135,7 +135,7 @@ class DepartmentRepo(IsDepartmentRepo):
                     JOIN scores as s ON s.course_id = c.course_id 
                     GROUP BY d.department_name
                     ORDER BY max_gpa DESC
-                """""
+                """
             )
             result = self.db.execute(query)
             data_row = result.mappings().all()
@@ -146,7 +146,7 @@ class DepartmentRepo(IsDepartmentRepo):
     def get_avg_gpa_by_department(self) -> List[DepartmentCourseAvgGpaDTO]:
         try: 
             query = text(
-                """""
+                """
                     SELECT 
                         d.department_name,
                         AVG(s.gpa) as avg_gpa
@@ -155,18 +155,18 @@ class DepartmentRepo(IsDepartmentRepo):
                     JOIN scores as s ON s.course_id = c.course_id 
                     GROUP BY d.department_name
                     ORDER BY avg_gpa DESC
-                """""
+                """
             )
             result = self.db.execute(query)
             data_row = result.mappings().all()
             return [DepartmentCourseAvgGpaDTO(**data) for data in data_row]
         except Exception as e:
-            raise  f"Error: {e}"
+            raise e
     
     def get_avg_final_grade_by_department(self) -> List[DepartmentCourseAvgFinalGradeDTO]:
         try: 
             query = text(
-                """""
+                """
                     SELECT 
                         d.department_name,
                         AVG(s.final_grade) as avg_final_grade
@@ -175,7 +175,7 @@ class DepartmentRepo(IsDepartmentRepo):
                     JOIN scores as s ON s.course_id = c.course_id 
                     GROUP BY d.department_name
                     ORDER BY avg_final_grade DESC
-                """""
+                """
             )
             result = self.db.execute(query)
             data_row = result.mappings().all()

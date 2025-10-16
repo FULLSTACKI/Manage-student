@@ -1,8 +1,8 @@
-from src.domain.entities.department.department import Department
-from src.domain.entities.department.department_repo import IsDepartmentRepo
-from src.models.schemas import UploadDepartmentRequest, UploadDepartmentResponse, departmentOut, GetDepartmentRequest, GetDepartmentResponse
+from src.domain.entities.department import Department
+from src.domain.repositories.department_repo import IsDepartmentRepo
+from src.application.dtos import *
 from src.utils.validators import validate_id, validate_name
-from src.utils.error.exceptions import ValidationError
+from src.utils import ValidationError, HTTPException
 from typing import *
 
 class DepartmentManagement:
@@ -57,6 +57,22 @@ class DepartmentManagement:
         list_department = self.Department_repo.get_all()
         return list_department
     
+    def get_analytic_department_view(self, req:AnalyticsRequest) -> List[AnalyticsResponse]:
+        try:
+            query_map = (req.dimension, req.metric, req.agg)
+            query_entity = self._analytics_map.get(query_map)
+            if not query_entity:
+                raise HTTPException(
+                    status_code=400, # 400 Bad Request - lỗi từ phía client
+                    detail=f"Sự kết hợp truy vấn không được hỗ trợ: {query_map}"
+                )
+            raw_data = query_entity()
+            result_dtos = [AnalyticsResponse(columns_x= row.department_name, columns_y=row.avg_gpa) for row in raw_data]
+            return result_dtos
+        except ValidationError as e:
+            raise e
+        except ValueError as f:
+            raise f
 
     def view(self, req: GetDepartmentRequest) -> GetDepartmentResponse:
         Department_entity = self.get_by_id(req.id)

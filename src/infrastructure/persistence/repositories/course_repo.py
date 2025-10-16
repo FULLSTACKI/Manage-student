@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from src.models.models import Course as CourseModel
-from src.domain.entities.courses.course_repo import IsCourseRepo
-from src.domain.entities.courses.course import Course
+from src.infrastructure.persistence.models import Course as CourseModel
+from src.domain.repositories.course_repo import IsCourseRepo
+from src.domain.entities.course import Course
 from sqlalchemy.exc import IntegrityError
 
 def _to_model(entity: Course) -> CourseModel:

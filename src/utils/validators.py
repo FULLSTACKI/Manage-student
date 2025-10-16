@@ -3,7 +3,7 @@ import re
 from typing import Optional
 from pathlib import Path
 
-from src.models.schemas import UploadScoreRequest, UploadStudentRequest, UploadCourseRequest
+# from src.application.dtos import UploadScoreRequest, UploadStudentRequest, UploadCourseRequest
 
 FORMATS_PATH = Path(__file__).parent / "formats.json"
 _patterns = {}
@@ -65,52 +65,5 @@ def validate_credits(credits: int) -> bool:
         return False
     return 1 <= credits <= 5
 
-def validate_upload_student_request(req: UploadStudentRequest) -> Optional[str]:
-    if not validate_id(req.id):
-        return "invalid id"
-    if not validate_name(req.name):
-        return "invalid name"
-    if not validate_email(req.email):
-        return "invalid email"
-    if not validate_date(req.birthday):
-        return "invalid birthday"
-    if not validate_sex(req.sex):
-        return "invalid sex"
-    return None
-
-def validate_upload_score_request(req: UploadScoreRequest) -> Optional[str]:
-    if not validate_id(req.student_id):
-        return "invalid student_id"
-    if not validate_id(req.course_id):
-        return "invalid course_id"
-    if not validate_score(req.coursework_grade):
-        return "invalid coursework_grade"
-    if not validate_score(req.midterm_grade):
-        return "invalid midterm_grade"
-    if not validate_score(req.final_grade):
-        return "invalid final_grade"
-    if not validate_score(req.gpa):
-        return "invalid gpa"
-    return None
-
-def validate_upload_course_request(req: UploadCourseRequest) -> Optional[str]:
-    if not validate_id(req.id):
-        return "invalid id"
-    if not validate_name(req.name):
-        return "invalid name"
-    if not validate_date(req.start_course):
-        return "invalid start_date"
-    if not validate_credits(req.credits):
-        return "invalid credits"
-    return None
-
-__all__ = [
-    "validate_student_id",
-    "validate_course_id",
-    "validate_score",
-    "validate_upload_score_request",
-    "validate_registration_ids",
-    "validate_upload_student_request",
-]
 
 

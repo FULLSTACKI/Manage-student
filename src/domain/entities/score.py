@@ -1,5 +1,5 @@
-from src.utils.error.exceptions import ValidationError
-from src.app.service.gpa_service import compute_gpa
+from src.utils.exceptions import ValidationError
+from src.domain.services.gpa_service import compute_gpa
 
 class Score:
     def __init__(self, student_id: str, course_id: str, coursework_grade: float, midterm_grade: float, final_grade: float, gpa:float):

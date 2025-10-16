@@ -1,7 +1,7 @@
 from datetime import date
-from src.utils.error.exceptions import ValidationError
-from src.app.service.compare_date_service import parse_date
-from src.app.service.end_course import compute_end_course
+from src.utils.exceptions import ValidationError
+from src.domain.services.compare_date_service import parse_date
+from src.domain.services.end_course import compute_end_course
 class Course:
     def __init__(self, id: str, name: str, credits: int, start_course: date, end_course: date):
         self.id = id

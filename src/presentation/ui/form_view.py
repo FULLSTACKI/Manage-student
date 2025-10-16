@@ -25,8 +25,8 @@ def view_score():
             }
 
             try:
-                url = api_base.rstrip("/") + "/get_score"
-                resp = requests.post(url, json=payload, timeout=10)
+                url = api_base.rstrip("/") + "/scores"
+                resp = requests.get(url, json=payload, timeout=10)
                 try:
                     data = resp.json()
                     st.info(f"Response JSON: {data}")

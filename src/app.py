@@ -1,5 +1,6 @@
 import streamlit as st
-from src1.app.ui import form_upload, form_view
+from src.presentation.ui import form_upload
+from src.presentation.ui import form_view
 
 
 st.set_page_config(page_title="Student Management App", page_icon=":school:", layout="wide")

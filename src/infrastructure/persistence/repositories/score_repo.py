@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from src.domain.entities.scores.score_repo import IsScoreRepo
-from src.models.models import Score as ScoreModel
-from src.domain.entities.scores.score import Score
+from src.domain.repositories import IsScoreRepo
+from src.infrastructure.persistence.models import Score as ScoreModel
+from src.domain.entities import Score
 
 
 def _to_model(entity: Score) -> ScoreModel:

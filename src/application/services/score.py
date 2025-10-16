@@ -1,9 +1,9 @@
-from src.utils.validators import validate_upload_score_request, validate_id
-from src.utils.error.exceptions import ValidationError
-from src.models.schemas import UploadScoreResponse, UploadScoreRequest, ScoreOut, GetScoreRequest, GetScoreResponse
-from src.domain.entities.scores.score import Score
-from src.domain.entities.registrations.registration_repo import IsRegistrationRepo
-from src.domain.entities.scores.score_repo import IsScoreRepo
+from src.utils.validators import validate_id
+from src.utils.exceptions import ValidationError
+from src.application.dtos.score_dto import *
+from src.domain.entities.score import Score
+from src.domain.repositories.registration_repo import IsRegistrationRepo
+from src.domain.repositories.score_repo import IsScoreRepo
 
 class ScoreManagement:
     def __init__(self, score_repo: IsScoreRepo, regis_repo: IsRegistrationRepo):
@@ -11,9 +11,9 @@ class ScoreManagement:
         self.regis_repo = regis_repo
 
     def upload(self, req: UploadScoreRequest) -> UploadScoreResponse:
-        err = validate_upload_score_request(req)
-        if err:
-            raise ValidationError("INVALID_INPUT", detail=err)
+        # err = validate_upload_score_request(req)
+        # if err:
+        #     raise ValidationError("INVALID_INPUT", detail=err)
         
         if not self.regis_repo.get_by_id(req.student_id, req.course_id):
             raise ValidationError("ALREADY_REGISTERED", detail= f"Sinh viên {req.student_id} hoặc môn học {req.course_id} không tồn tại!")
@@ -50,8 +50,8 @@ class ScoreManagement:
             raise ValidationError("NOT_FOUND")
         return score 
     
-    def view(self, req: GetScoreRequest) -> GetScoreResponse:
-        score = self.get_by_id(req.student_id, req.course_id)
+    def view(self, student_id:str, course_id:str) -> GetScoreResponse:
+        score = self.get_by_id(student_id, course_id)
         score_out = ScoreOut.from_entity(score)
         return GetScoreResponse(
             success=True,

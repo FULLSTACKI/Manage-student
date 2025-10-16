@@ -2,13 +2,13 @@ import pandas as pd
 from pathlib import Path
 from sqlalchemy.exc import SQLAlchemyError
 
-from src.database.db import SessionLocal
-from src.models.models import Student, Course, Registration, Score, Department
-from src.app.service.compare_date_service import parse_date
-from src.app.service.age_service import compute_age
-from src.app.service.gpa_service import compute_gpa
+from src.infrastructure.persistence.db import SessionLocal
+from src.infrastructure.persistence.models import Student, Course, Registration, Score, Department
+from src.domain.services.compare_date_service import parse_date
+from src.domain.services.age_service import compute_age
+from src.domain.services.gpa_service import compute_gpa
 
-DATA_DIR = Path(__file__).parent.parent / "data"
+DATA_DIR = Path(__file__).parent / "seed"
 
 def seed_data_from_csv(db):
     try:

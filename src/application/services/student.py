@@ -1,17 +1,17 @@
-from src.domain.entities.students.student_repo import IsStudentRepo
-from src.models.schemas import UploadStudentRequest, UploadStudentResponse, studentOut, GetStudentRequest, GetStudentResponse
-from src.utils.error.exceptions import ValidationError
-from src.domain.entities.students.student import Student 
-from src.utils.validators import validate_upload_student_request, validate_id
+from src.domain.repositories.student_repo import IsStudentRepo
+from src.application.dtos.student_dto import *
+from src.utils.exceptions import ValidationError
+from src.domain.entities.student import Student 
+from src.utils.validators import validate_id
 
 class StudentManagement:
     def __init__(self, student_repo: IsStudentRepo):
         self.student_repo = student_repo
 
     def upload(self, req: UploadStudentRequest) -> UploadStudentResponse:
-        errors = validate_upload_student_request(req)
-        if errors:
-            raise ValidationError("INVALID_INPUT", detail=str(e))
+        # errors = validate_upload_student_request(req)
+        # if errors:
+        #     raise ValidationError("INVALID_INPUT", detail=str(e))
         try:
             student_entity = Student.add(
                 id = req.id,
@@ -40,8 +40,8 @@ class StudentManagement:
             raise ValidationError("NOT_FOUND",detail=f"student {student_id} not found")
         return student
 
-    def view(self, req: GetStudentRequest) -> GetStudentResponse:
-        student_entity = self.get_by_id(req.id)
+    def view(self, student_id: str) -> GetStudentResponse:
+        student_entity = self.get_by_id(student_id)
         student_out = studentOut.from_entity(student_entity)
         return GetStudentResponse(
             success=True,

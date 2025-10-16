@@ -1,7 +1,7 @@
 from datetime import date
-from src.utils.error.exceptions import ValidationError
-from src.app.service.compare_date_service import parse_date
-from src.app.service.age_service import compute_age
+from src.utils.exceptions import ValidationError
+from src.domain.services.compare_date_service import parse_date
+from src.domain.services.age_service import compute_age
 class Student:
     def __init__(self, id: str, name: str, email: str, birthday: date, age: int, sex: str):
         self.id = id
