@@ -29,5 +29,14 @@ def get_score_service(regis_repo: IsRegistrationRepo = Depends(get_registration_
 def get_department_repo(db:Session=Depends(get_db)) -> IsDepartmentRepo:
     return DepartmentRepo(db_session=db)
 
-def get_analytic_department_service(department_repo: IsDepartmentRepo = Depends(get_department_repo)) -> DepartmentManagement:
-    return DepartmentManagement(Department_repo=department_repo)
+def get_analytic_repo(db:Session=Depends(get_db)) -> IsAnalyticRepo:
+    return AnalyticRepo(db_session=db)
+
+def get_analytic_department_service(analytic_repo: IsAnalyticRepo=Depends(get_analytic_repo)) -> AnalyticManagement:
+    return AnalyticManagement(analytic_repo=analytic_repo)
+
+def get_overview_repo(db_session: Session= Depends(get_db)) -> IsOverviewKpiRepo:
+    return OverviewRepo(db_session=db_session)
+
+def get_overview_service(overview_repo: IsOverviewKpiRepo = Depends(get_overview_repo)) -> OverviewManagement:
+    return OverviewManagement(overview_repo=overview_repo)

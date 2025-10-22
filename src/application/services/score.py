@@ -1,4 +1,4 @@
-from src.utils.validators import validate_id
+from src.utils.validators import validate_id, validate_upload_score_request
 from src.utils.exceptions import ValidationError
 from src.application.dtos.score_dto import *
 from src.domain.entities.score import Score
@@ -11,9 +11,15 @@ class ScoreManagement:
         self.regis_repo = regis_repo
 
     def upload(self, req: UploadScoreRequest) -> UploadScoreResponse:
-        # err = validate_upload_score_request(req)
-        # if err:
-        #     raise ValidationError("INVALID_INPUT", detail=err)
+        err = validate_upload_score_request(
+            student_id=req.student_id,
+            course_id=req.course_id,
+            coursework_grade=req.coursework_grade,
+            midterm_grade=req.midterm_grade,
+            final_grade=req.final_grade
+        )
+        if err:
+            raise ValidationError("INVALID_INPUT", detail=err)
         
         if not self.regis_repo.get_by_id(req.student_id, req.course_id):
             raise ValidationError("ALREADY_REGISTERED", detail= f"Sinh viên {req.student_id} hoặc môn học {req.course_id} không tồn tại!")
@@ -49,6 +55,12 @@ class ScoreManagement:
         if not score:
             raise ValidationError("NOT_FOUND")
         return score 
+    
+    # def get_avg_gpa_all(self) -> float:
+    #     avg_gpa_by_school = self.score_repo.get_avg_gpa_all()
+    #     if not avg_gpa_by_school:
+    #         raise ValidationError("NOT_FOUND")
+    #     return avg_gpa_by_school
     
     def view(self, student_id:str, course_id:str) -> GetScoreResponse:
         score = self.get_by_id(student_id, course_id)

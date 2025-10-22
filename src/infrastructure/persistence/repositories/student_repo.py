@@ -3,25 +3,28 @@ from sqlalchemy.exc import IntegrityError
 from src.domain.repositories import IsStudentRepo
 from src.infrastructure.persistence.models import Student as StudentModel
 from src.domain.entities import Student
+from typing import List
 
 def _to_model(entity: Student) -> StudentModel:
     return StudentModel(
-        id=entity.id,
-        name=entity.name,
+        student_id=entity.student_id,
+        student_name=entity.student_name,
         email=entity.email,
         birthday=entity.birthday,
         age=entity.age,
-        sex=entity.sex
+        sex=entity.sex,
+        department_id = entity.department_id
     )
     
 def _to_entity(model: StudentModel) -> Student:
     return Student(
-        id=model.id,
-        name=model.name,
+        student_id=model.student_id,
+        student_name=model.student_name,
         email=model.email,
         birthday=model.birthday,
         age=model.age,
-        sex=model.sex
+        sex=model.sex,
+        department_id=model.department_id
     )
 
 class StudentRepo(IsStudentRepo):
@@ -33,26 +36,46 @@ class StudentRepo(IsStudentRepo):
         if db_model:
             return _to_entity(db_model)
         return None
-        
+    
+    def get_all(self) -> List[Student]:
+        try:
+            data_row = self.db_session.query(StudentModel).all()
+            if data_row:
+                return [Student(
+                    student_id=data.student_id,
+                    student_name=data.student_name,
+                    email=data.email,
+                    birthday=data.birthday,
+                    age=data.age,
+                    sex=data.sex,
+                    department_id=data.department_id
+                )
+                for data in data_row]
+        except IntegrityError as e:
+            raise e
+        except Exception as f:
+            raise f
+    
     def save(self, req_student: Student) -> Student:
-        existing = self.get_by_id(req_student.id)
+        existing = self.get_by_id(req_student.student_id)
         
         save_student = None 
         
         if existing:
-            existing.name = req_student.name
+            existing.student_name = req_student.student_name
             existing.email = req_student.email
             existing.age = req_student.age 
             existing.birthday = req_student.birthday
             existing.sex = req_student.sex
+            existing.department_id = req_student.department_id
             save_student = _to_model(existing)
         else: 
             save_student = _to_model(req_student)
-            self.db_session.add(save_student)
         try:
+            persistent = self.db_session.merge(save_student)
             self.db_session.commit()
-            self.db_session.refresh(save_student)
-            return _to_entity(save_student)
+            self.db_session.refresh(persistent)
+            return _to_entity(persistent)
         except IntegrityError as e:
             errors = str(e)
             self.db_session.rollback()

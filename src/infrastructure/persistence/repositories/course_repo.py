@@ -6,20 +6,22 @@ from sqlalchemy.exc import IntegrityError
 
 def _to_model(entity: Course) -> CourseModel:
     return CourseModel(
-        id=entity.id,
-        name=entity.name,
+        course_id=entity.id,
+        course_name=entity.name,
         credits=entity.credits,
         start_course=entity.start_course,
-        end_course=entity.end_course
+        end_course=entity.end_course,
+        department_id=entity.department_id
     )
     
 def _to_entity(model: CourseModel) -> Course:
     return Course(
-        id=model.id,
-        name=model.name,
+        id=model.course_id,
+        name=model.course_name,
         credits=model.credits,
         start_course=model.start_course,
-        end_course=model.end_course
+        end_course=model.end_course,
+        department_id=model.department_id
     )
 
 class CourseRepo(IsCourseRepo):
@@ -27,7 +29,7 @@ class CourseRepo(IsCourseRepo):
         self.db = db_session
 
     def get_by_id(self, course_id: str) -> Course:
-        course = self.db.query(CourseModel).filter(CourseModel.id == course_id).first()
+        course = self.db.query(CourseModel).filter(CourseModel.course_id == course_id).first()
         if course:
             return _to_entity(course)
         return None
@@ -42,14 +44,15 @@ class CourseRepo(IsCourseRepo):
             existing.credits = req_course.credits
             existing.start_course = req_course.start_course 
             existing.end_course = req_course.end_course
+            existing.department_id = req_course.department_id
             save_course = _to_model(existing)
         else: 
             save_course = _to_model(req_course)
-            self.db.add(save_course)
         try:
+            persistent = self.db.merge(save_course)
             self.db.commit()
-            self.db.refresh(save_course)
-            return _to_entity(save_course)
+            self.db.refresh(persistent)
+            return _to_entity(persistent)
         except IntegrityError as e:
             errors = str(e)
             self.db.rollback()

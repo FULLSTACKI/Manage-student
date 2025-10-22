@@ -65,5 +65,33 @@ def validate_credits(credits: int) -> bool:
         return False
     return 1 <= credits <= 5
 
+def validate_upload_student_request(id, name, email, birthday, sex, department_id):
+    if not (validate_id(id) and validate_id(department_id)):
+        raise "id invalid"
+    if not validate_name(name):
+        raise "student name invalid"
+    if not validate_email(email):
+        raise "student email invalid"
+    if not validate_date(birthday):
+        raise "student birthday invalid"
+    if not validate_sex(sex):
+        raise "student sex invalid"
+    return None
 
+def validate_upload_score_request(student_id, course_id, coursework_grade, midterm_grade, final_grade):
+    if not validate_id(student_id) and not validate_id(course_id):
+        raise "id invalid"
+    if not (validate_score(coursework_grade) and validate_score(midterm_grade) and validate_score(final_grade)):
+        raise "score invalid"
+    return None
 
+def validate_upload_course_request(id, name, credits, start_course, department_id):
+    if not (validate_id(id) and validate_id(department_id)):
+        raise "id invalid"
+    if not validate_name(name):
+        raise "course name invalid"
+    if not validate_credits(credits):
+        raise "credits invalid"
+    if not validate_date(start_course):
+        raise "date invalid"
+    return None

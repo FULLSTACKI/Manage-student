@@ -26,10 +26,10 @@ def _to_entity(model: ScoreModel) -> Score:
     )
 
 class ScoreRepo(IsScoreRepo):
-    def __init__(self, db_session: Session = None):
+    def __init__(self, db_session: Session):
         self.db = db_session
 
-    def get_by_id(self, student_id: str, course_id: str):
+    def get_by_id(self, student_id: str, course_id: str) -> Score:
         score = self.db.query(ScoreModel).filter(
             ScoreModel.student_id == student_id,
             ScoreModel.course_id == course_id
@@ -37,25 +37,36 @@ class ScoreRepo(IsScoreRepo):
         if score:
             return _to_entity(score)
         return None
+    
+    # def get_avg_gpa_all(self) -> float:
+    #     try:
+    #         query = """
+    #             SELECT 
+    #                 AVG(s.gpa) as avg_gpa
+    #             FROM scores as s
+    #         """
+    #         result = self.db.execute(query)
+    #         return result
+    #     except Exception as e:
+    #         raise e
 
-    def save(self, req_score: Score) -> Score:
+    def save(self,req_score: Score) -> Score:
         existing = self.get_by_id(req_score.student_id, req_score.course_id)
-        
-        save_score = None 
-        
+
         if existing:
-            existing.coursework_grade=req_score.coursework_grade
-            existing.midterm_grade= req_score.midterm_grade
+            existing.coursework_grade = req_score.coursework_grade
+            existing.midterm_grade = req_score.midterm_grade
             existing.final_grade = req_score.final_grade
             existing.gpa = req_score.gpa
             save_score = _to_model(existing)
-        else: 
+        else:
             save_score = _to_model(req_score)
-            self.db.add(save_score)
+
         try:
+            persistent_obj = self.db.merge(save_score)
             self.db.commit()
-            self.db.refresh(save_score)
-            return _to_entity(save_score)
+            self.db.refresh(persistent_obj)
+            return _to_entity(persistent_obj)
         except IntegrityError as e:
             self.db.rollback()
             raise e

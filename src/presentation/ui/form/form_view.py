@@ -1,16 +1,16 @@
-import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 import streamlit as st
 import requests
 import pandas as pd
+from dotenv import load_dotenv
 
-api_base = "http://127.0.0.1:8000"
+load_dotenv()
+api_base = os.getenv("API_BASE")
 
 def view_score():
     st.title("View student score")
 
-    with st.form("view_form"):
+    with st.form("view_form", clear_on_submit=True):
         student_id = st.text_input("Student ID")
         course_id = st.text_input("Course ID")
         submit = st.form_submit_button("View")
@@ -19,14 +19,9 @@ def view_score():
         if not student_id or not course_id:
             st.error("Student ID and Course ID are required.")
         else:
-            payload = {
-                "student_id": student_id,
-                "course_id": course_id
-            }
-
             try:
-                url = api_base.rstrip("/") + "/scores"
-                resp = requests.get(url, json=payload, timeout=10)
+                url = api_base.rstrip("/") + f"/scores/student_id={student_id}/course_id={course_id}"
+                resp = requests.get(url, timeout=10)
                 try:
                     data = resp.json()
                     st.info(f"Response JSON: {data}")
@@ -51,26 +46,22 @@ def view_score():
                 st.error(f"Failed to connect to API: {e}")
                 
 def view_student():
-    st.title("View student details")
-
-    with st.form("view_form"):
-        student_id = st.text_input("Student ID")
-        submit = st.form_submit_button("View")
+    st.subheader("Danh sách Sinh viên")
+    with st.form("view_form", clear_on_submit=True):
+        student_id = st.text_input("Tìm kiếm theo mã số Sinh viên:")
+        submit = st.form_submit_button("Tìm kiếm")
     
     if submit:
         if not student_id:
             st.error("Student ID is required.")
         else:
-            payload = {
-                "id": student_id
-            }
-
             try:
-                url = api_base.rstrip("/") + "/get_student"
-                resp = requests.post(url, json=payload, timeout=10)
+                url = api_base.rstrip("/") + f"/students/{student_id}"
+                resp = requests.get(url, timeout=10)
+                resp.raise_for_status()
                 try:
                     data = resp.json()
-                    st.info(f"Response JSON: {data}")
+                    # st.json(data)
                 except ValueError:
                     st.error(f"Invalid JSON response (status {resp.status_code})")
                     st.write(resp.text)
@@ -79,9 +70,17 @@ def view_student():
                         # Expecting structure like { "student": {...} }
                         if isinstance(data, dict) and "student" in data:
                             st.success("Student retrieved successfully")
-                            st.subheader("📊 Student Details")
+                            st.subheader("📊 Thông tin Sinh viên")
                             st.markdown("---")
-                            st.dataframe(pd.json_normalize(data["student"]))
+                            student = data["student"]
+                            with st.container(border=True):
+                                col_info, col_actions = st.columns([4, 1])
+                                with col_info:
+                                    st.write(f"**{student.get("name")}** (ID: {student.get("id")})")
+                                    st.caption(f"Email: {student.get("email")} | Ngày sinh: {student.get("birthday")}")
+                                with col_actions:
+                                    st.button("Sửa")
+                                    st.button("Xóa")
                         else:
                             st.error(f"Student not found (status {resp.status_code})")
                             st.json(data)
@@ -94,7 +93,7 @@ def view_student():
 def view_course():
     st.title("View course details")
     
-    with st.form("view_form"):
+    with st.form("view_form", clear_on_submit=True):
         course_id = st.text_input("Course ID")
         submit = st.form_submit_button("View")
     
@@ -102,13 +101,9 @@ def view_course():
         if not course_id:
             st.error("Course ID is required.")
         else:
-            payload = {
-                "id": course_id
-            }
-
             try:
-                url = api_base.rstrip("/") + "/get_course"
-                resp = requests.post(url, json=payload, timeout=10)
+                url = api_base.rstrip("/") + f"/courses/{course_id}"
+                resp = requests.get(url, timeout=10)
                 try:
                     data = resp.json()
                     st.info(f"Response JSON: {data}")

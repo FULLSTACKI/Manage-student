@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from src.application.services.department import *
+from src.application.services.analytic import *
 from src.application.dtos.analytic_view_dto import *
 from src.presentation.api.dependencies import get_analytic_department_service
 from src.utils import  HTTPException, AppError, to_http_exception
@@ -39,7 +39,7 @@ def get_analytics_view():
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {e}")
     
 @router.post("/analytic_post", response_model=List[AnalyticsResponse])
-def upload_analytic_department(req: AnalyticsRequest, service: DepartmentManagement = Depends(get_analytic_department_service)):
+def upload_analytic_department(req: AnalyticsRequest, service: AnalyticManagement = Depends(get_analytic_department_service)):
     try:
         query_out = service.get_analytic_department_view(req)
         return query_out

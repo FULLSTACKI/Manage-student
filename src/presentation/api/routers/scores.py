@@ -6,7 +6,7 @@ from src.utils import AppError, to_http_exception, HTTPException
 
 router = APIRouter()
 # gửi request POST /upload_score với body:
-@router.post("/Scores", response_model=UploadScoreResponse)
+@router.post("/scores", response_model=UploadScoreResponse)
 def upload_score(request: UploadScoreRequest, service:ScoreManagement = Depends(get_score_service)):
     try:
         result = service.upload(request)
@@ -17,7 +17,7 @@ def upload_score(request: UploadScoreRequest, service:ScoreManagement = Depends(
         raise HTTPException(status_code=500, detail=str(e))
 
 # gửi request POST /get_score với body:
-@router.get("/students/{student_id}/courses/{course_id}/Scores", response_model=GetScoreResponse)
+@router.get("/scores/student_id={student_id}/course_id={course_id}", response_model=GetScoreResponse)
 def get_score(student_id: str, course_id: str, service: ScoreManagement = Depends(get_score_service)):
     try:
         score_out = service.view(student_id,course_id)

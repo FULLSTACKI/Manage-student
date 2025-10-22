@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel
 from typing import *
 from datetime import date as Date
 from src.domain.entities import Student
@@ -8,19 +8,20 @@ class studentOut(BaseModel):
     id: str
     name: str
     email: str
-    birthday: Date
-    age: int
+    birthday: str
+    age: str
     sex: str
+    department_id: str
 
     def from_entity(student: Student):
-        
         return studentOut(
-            id = student.id,
-            name = student.name,
+            id = student.student_id,
+            name = student.student_name,
             email = student.email,
-            birthday = student.birthday,
-            age = student.age,
-            sex = student.sex
+            birthday = f"{student.birthday}",
+            age = f"{student.age}",
+            sex = student.sex,
+            department_id=student.department_id
         )
         
     
@@ -28,9 +29,10 @@ class UploadStudentRequest(BaseModel):
     id: str
     name: str
     email: str
-    birthday: Optional[str]
-    age: Optional[int] = None
+    birthday: str
+    age: str = None
     sex: str
+    department_id: str
     
 
 class UploadStudentResponse(BaseModel):

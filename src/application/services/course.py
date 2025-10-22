@@ -1,22 +1,29 @@
 from src.domain.entities import Course
 from src.domain.repositories import IsCourseRepo
 from src.application.dtos.course_dto import *
-from src.utils import validate_id, ValidationError
+from src.utils import validate_id, ValidationError, validate_upload_course_request
 
 class CourseManagement:
     def __init__(self, course_repo: IsCourseRepo):
         self.course_repo = course_repo
 
     def upload(self, req: UploadCourseRequest) -> UploadCourseResponse:
-        # err = validate_upload_course_request(req)
-        # if err:
-        #     raise ValidationError("INVALID_INPUT", detail=err)
+        err = validate_upload_course_request(
+            id=req.id,
+            name=req.name,
+            credits=req.credits,
+            start_course=req.start_course,
+            department_id=req.department_id
+        )
+        if err:
+            raise ValidationError("INVALID_INPUT", detail=err)
         try:
             course_entity = Course.add(
                 id=req.id,
                 name=req.name,
                 credits=req.credits,
-                start_course=req.start_course
+                start_course=req.start_course,
+                department_id=req.department_id
             )
             
             course_save = self.course_repo.save(course_entity)

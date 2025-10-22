@@ -9,18 +9,6 @@ class DepartmentManagement:
     def __init__(self, Department_repo: IsDepartmentRepo):
         self.Department_repo = Department_repo
         
-        self._analytics_map: Dict[Tuple[str, str, str], Callable[[], List[Dict]]] = {
-            ('department', 'course', 'count'): self.Department_repo.get_total_course_by_department,
-            ('department', 'student', 'count'): self.Department_repo.get_total_student_by_department,
-            ('department', 'sex', 'count'): self.Department_repo.get_total_student_sex_by_department,
-            ('department', 'gpa','avg'): self.Department_repo.get_avg_gpa_by_department,
-            ('department', 'gpa','min'): self.Department_repo.get_min_gpa_by_department,
-            ('department', 'gpa','max'): self.Department_repo.get_max_gpa_by_department,
-            ('department', 'final grade','avg'): self.Department_repo.get_avg_final_grade_by_department,
-            ('department', 'final grade','min'): self.Department_repo.get_min_final_grade_by_department,
-            ('department', 'final grade','max'): self.Department_repo.get_max_final_grade_by_department,
-        }
-        
     def upload(self, req: UploadDepartmentRequest) -> UploadDepartmentResponse:
         if not validate_id(req.id):
             raise ValidationError("INVALID_INPUT", detail=f"mã khoa {req.id} không hợp lệ")
@@ -56,23 +44,6 @@ class DepartmentManagement:
     def get_all(self) -> List[Department]:
         list_department = self.Department_repo.get_all()
         return list_department
-    
-    def get_analytic_department_view(self, req:AnalyticsRequest) -> List[AnalyticsResponse]:
-        try:
-            query_map = (req.dimension, req.metric, req.agg)
-            query_entity = self._analytics_map.get(query_map)
-            if not query_entity:
-                raise HTTPException(
-                    status_code=400, # 400 Bad Request - lỗi từ phía client
-                    detail=f"Sự kết hợp truy vấn không được hỗ trợ: {query_map}"
-                )
-            raw_data = query_entity()
-            result_dtos = [AnalyticsResponse(columns_x= row.department_name, columns_y=row.avg_gpa) for row in raw_data]
-            return result_dtos
-        except ValidationError as e:
-            raise e
-        except ValueError as f:
-            raise f
 
     def view(self, req: GetDepartmentRequest) -> GetDepartmentResponse:
         Department_entity = self.get_by_id(req.id)

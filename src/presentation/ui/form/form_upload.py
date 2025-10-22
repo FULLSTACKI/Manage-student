@@ -1,11 +1,10 @@
-import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-
 import streamlit as st
-import requests
+import requests  
+from dotenv import load_dotenv
 
-api_base = "http://localhost:8000"  
+load_dotenv()
+api_base = os.getenv("API_BASE")
 
 def upload_score():
     st.title("Upload student score")
@@ -31,7 +30,7 @@ def upload_score():
             }
 
             try:
-                url = api_base.rstrip("/") + "/Scores"
+                url = api_base.rstrip("/") + "/scores"
                 resp = requests.post(url, json=payload, timeout=10)
                 try:
                     data = resp.json()
@@ -55,15 +54,15 @@ def upload_score():
             except requests.exceptions.RequestException as e:
                 st.error(f"Failed to connect to API: {e}")
 
-def upload_student():
-    st.title("Upload student info")
-    
+def upload_student():    
+    st.subheader("➕ Thêm mới")
     with st.form("upload_form", clear_on_submit=True):
         id = st.text_input("Student ID")
         name = st.text_input("Name")
         email = st.text_input("Email")
         birthday = st.text_input("Birthday", placeholder="YYYY-MM-DD")
         sex = st.selectbox("Sex", options=["M", "F", "Unknown"], index=2)
+        department_id = st.text_input("Department ID")
         submit = st.form_submit_button("Upload")
 
     if submit:
@@ -76,11 +75,11 @@ def upload_student():
                 "email": email,
                 "birthday": birthday,
                 "sex":  sex,
+                "department_id": department_id
             }
-            st.info(f"Payload: {payload}")
-
+            
             try:
-                url = api_base.rstrip("/") + "/Students"
+                url = api_base.rstrip("/") + "/students"
                 resp = requests.post(url, json=payload, timeout=10)
                 try:
                     data = resp.json()
@@ -112,6 +111,7 @@ def upload_course():
         name = st.text_input("Course Name")
         credits = st.number_input("Credits", min_value=1, max_value=5, value=3, step=1)
         start_date = st.text_input("Start date", placeholder="YYYY-MM-DD")
+        department_id = st.text_input("Department ID")
         submit = st.form_submit_button("Upload")
     
     if submit:
@@ -123,10 +123,11 @@ def upload_course():
                 "name": name,
                 "credits": credits,
                 'start_course': start_date,
+                "department_id": department_id
             }
 
             try:
-                url = api_base.rstrip("/") + "/Courses"
+                url = api_base.rstrip("/") + "/courses"
                 resp = requests.post(url, json=payload, timeout=10)
                 try:
                     data = resp.json()

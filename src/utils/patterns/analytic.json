@@ -10,13 +10,13 @@
             {
                 "key": "course", 
                 "display": "Theo Khóa học",
-                "valid_metrics": ["gpa", "student", "final grade", "sex"]
+                "valid_metrics": ["gpa", "student", "final grade", "sex", "department"]
             }
         ],
         "metrics": [
             {   "key": "gpa",
                 "display": "Điểm GPA",
-                "allowed_agg": ["avg", "max", "min"]
+                "allowed_agg": ["avg", "max", "min", "std"]
             },
             {   "key": "student",
                 "display": "Sĩ số sinh viên",
@@ -30,9 +30,13 @@
                 "display": "Sĩ số khóa học",
                 "allowed_agg": ["count"]
             },
+            {   "key":  "department",
+                "display": "Sĩ số khoa",
+                "allowed_agg": ["count"]
+            },
             {   "key": "final grade",
                 "display": "Điểm cuối kì",
-                "allowed_agg": ["avg", "max", "min"]
+                "allowed_agg": ["avg", "max", "min", "std"]
             }
         ]
     }

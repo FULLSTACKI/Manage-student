@@ -25,4 +25,4 @@ class AnalyticsRequest(BaseModel):
     
 class AnalyticsResponse(BaseModel):
     columns_x: str
-    columns_y: float
+    columns_y: str
