@@ -1,15 +1,15 @@
 from sqlalchemy.orm import Session
 from src.infrastructure.persistence.models import CourseModel
 from src.domain.repositories.course_repo import IsCourseRepo
-from src.domain.entities.course import Course
+from src.domain.entities import Course, Option
 from sqlalchemy.exc import IntegrityError
 from typing import List
 from sqlalchemy import text
 
 def _to_model(entity: Course) -> CourseModel:
     return CourseModel(
-        course_id=entity.id,
-        course_name=entity.name,
+        course_id=entity.course_id,
+        course_name=entity.course_name,
         credits=entity.credits,
         start_course=entity.start_course,
         end_course=entity.end_course,
@@ -18,8 +18,8 @@ def _to_model(entity: Course) -> CourseModel:
     
 def _to_entity(model: CourseModel) -> Course:
     return Course(
-        id=model.course_id,
-        name=model.course_name,
+        course_id=model.course_id,
+        course_name=model.course_name,
         credits=model.credits,
         start_course=model.start_course,
         end_course=model.end_course,
@@ -35,7 +35,7 @@ class CourseRepo(IsCourseRepo):
             query = text("SELECT course_id, course_name FROM courses")
             result = self.db.execute(query)
             course_row = result.mappings().all()
-            list_course = [Course(**data) for data in course_row]
+            list_course = [Option(id=data.course_id,name=data.course_name) for data in course_row]
             return list_course
         except Exception as e:
             raise  e

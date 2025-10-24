@@ -52,7 +52,3 @@ class Option(BaseModel):
 class StudentFilterOption(BaseModel):
     departments: List[Option] = None
     courses: List[Option] = None
-    
-class StudentQueryByColumns(BaseModel):
-    display_name: str 
-    columns: List[dict]

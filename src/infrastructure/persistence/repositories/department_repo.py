@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from src.infrastructure.persistence.models import DepartmentModel
 from src.domain.repositories import IsDepartmentRepo
-from src.domain.entities import Department
+from src.domain.entities import Department, Option
 from sqlalchemy.exc import IntegrityError
 from typing import *
 from sqlalchemy import text
@@ -27,7 +27,7 @@ class DepartmentRepo(IsDepartmentRepo):
             query = text("SELECT * FROM departments")
             result = self.db.execute(query)
             department_row = result.mappings().all()
-            list_department = [Department(**data) for data in department_row]
+            list_department = [Option(id=data.department_id,name=data.department_name) for data in department_row]
             return list_department
         except Exception as e:
             raise  e

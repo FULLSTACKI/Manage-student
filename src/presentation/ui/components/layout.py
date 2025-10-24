@@ -1,4 +1,6 @@
 import streamlit as st
+import httpx
+import asyncio
 import requests
 from src.presentation.ui import api_base
 
@@ -7,76 +9,57 @@ def footer():
         st.markdown("---")
         st.markdown("© 2025 Student Management App. All rights reserved.")
 
-def table_detail_student():
-    # --- Load columns structure
+
+def _get_columns():
     try:
-        url = api_base.rstrip("/") + "/students/columns"
-        resp = requests.get(url=url, timeout=10)
-        resp.raise_for_status()
-        return resp.json()
-    except Exception as e:
-        st.error(f"⚠️ Failed to fetch column config: {e}")
+        url = api_base.rstrip("/") + "/student/column"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as e:
+        st.error(f"Failed to connect to API: {e}")
+        return None
+
+def _get_filters(columns):
+    try:
+        col = ",".join(columns)
+        url = api_base.rstrip("/") + f"/student/filter?columns={col}"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as e:
+        st.error(f"Failed to connect to API: {e}")
+        return None
+
+def table_detail_student():
+    data_col = _get_columns()
+    
+    if not data_col or "columns" not in data_col:
+        st.error("❌ Không thể tải danh sách cột từ API. Vui lòng kiểm tra lại backend.")
+        st.stop() 
+
+    map_col = {col["label"]: col for col in data_col["columns"]}
+    selection = st.multiselect("Select columns to display:", map_col.keys())
+    list_col = [map_col[col].get("key") for col in selection]
+    
+    if not selection:
+        st.warning("Please select at least one column.")
         return
     
-    # st.subheader(view_config.get("display_name"))
-    # columns = view_config.get("columns")
-    
-    # map_col = {
-    #     col["label"]: col for col in columns
-    # } 
-    
-    # selected = st.multiselect("Select columns to display:", map_col.keys(), default=map_col.keys()[:5])
-    # selected_cols = map_col[selected]["key"]
-    
-    # if not selected_cols:
-    #     st.warning("Please select at least one column to display.")
-    #     return
+    data_filter = _get_filters(list_col)
+    filter_params = {}
+    if "departments" in data_filter:
+        dept = st.selectbox(
+            "🏫 Department",
+            ["All"] + [d["name"] for d in data_filter["departments"]]
+        )
+        if dept != "All":
+            filter_params["department_name"] = dept
 
-    # # --- Get filter metadata dynamically
-    # filter_params = {}
-    # try:
-    #     filters_resp = requests.get(
-    #         f"{api_base}/students/filters",
-    #         params={"columns": ",".join(selected_cols)}
-    #     )
-    #     filters_resp.raise_for_status()
-    #     filters = filters_resp.json()
-
-    #     if "departments" in filters:
-    #         dept = st.selectbox(
-    #             "🏫 Department",
-    #             ["All"] + [d["name"] for d in filters["departments"]]
-    #         )
-    #         if dept != "All":
-    #             filter_params["department_name"] = dept
-
-    #     if "courses" in filters:
-    #         course = st.selectbox(
-    #             "📘 Course",
-    #             ["All"] + [c["name"] for c in filters["courses"]]
-    #         )
-    #         if course != "All":
-    #             filter_params["course_name"] = course
-
-    # except Exception as e:
-    #     st.warning(f"Could not load filters: {e}")
-
-    # --- Fetch student data
-    # try:
-    #     resp = requests.get(
-    #         f"{api_base}/student/list",
-    #         params={"columns": ",".join(selected_cols), **filter_params}
-    #     )
-    #     resp.raise_for_status()
-    #     data = resp.json()
-    #     if not data:
-    #         st.info("No students found.")
-    #         return
-
-    #     df = pd.DataFrame(data)
-    #     st.dataframe(df, use_container_width=True)
-    # except Exception as e:
-    #     st.error(f"❌ Failed to load student data: {e}")
-if __name__ == "__main__":
-    data = table_detail_student()
-    st.info(data)
+    if "courses" in data_filter:
+        course = st.selectbox(
+            "📘 Course",
+            ["All"] + [c["name"] for c in data_filter["courses"]]
+        )
+        if course != "All":
+            filter_params["course_name"] = course

@@ -37,18 +37,6 @@ class ScoreRepo(IsScoreRepo):
         if score:
             return _to_entity(score)
         return None
-    
-    # def get_avg_gpa_all(self) -> float:
-    #     try:
-    #         query = """
-    #             SELECT 
-    #                 AVG(s.gpa) as avg_gpa
-    #             FROM scores as s
-    #         """
-    #         result = self.db.execute(query)
-    #         return result
-    #     except Exception as e:
-    #         raise e
 
     def save(self,req_score: Score) -> Score:
         existing = self.get_by_id(req_score.student_id, req_score.course_id)

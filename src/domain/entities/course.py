@@ -3,9 +3,9 @@ from src.utils.exceptions import ValidationError
 from src.domain.services.compare_date_service import parse_date
 from src.domain.services.end_course import compute_end_course
 class Course:
-    def __init__(self, id: str, name: str, credits: int, start_course: date, end_course: date, department_id: str):
-        self.id = id
-        self.name = name
+    def __init__(self, course_id: str, course_name: str, credits: int, start_course: date, end_course: date, department_id: str):
+        self.course_id = course_id
+        self.course_name = course_name
         self.credits = credits
         self.start_course = start_course
         self.end_course = end_course

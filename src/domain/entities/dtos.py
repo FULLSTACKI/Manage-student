@@ -30,3 +30,8 @@ class Chart:
     column_x: str
     column_y: str
     
+@dataclass 
+class Option:
+    id:str
+    name:str
+    

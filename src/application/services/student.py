@@ -47,13 +47,13 @@ class StudentManagement:
 
         if "department_name" in columns:
             filters["departments"] = [
-                {"id": d.department_id, "name": d.department_name}
+                {"id": d.id, "name": d.name}
                 for d in self.department_repo.get_filter_all()
             ]
 
         if "course_name" in columns:
             filters["courses"] = [
-                {"id": c.course_id, "name": c.course_name}
+                {"id": c.id, "name": c.name}
                 for c in self.course_repo.get_filter_all()
             ]
 

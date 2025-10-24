@@ -31,7 +31,7 @@ def manage_ui():
                 upload_student()
             
         with st.expander("Xem Danh sách thông tin Sinh viên"):
-            table_detail_student()
+            st.info(table_detail_student())
 
     # Bạn có thể tiếp tục thiết kế cho tab_course và tab_score theo cách tương tự
     with tab_course:

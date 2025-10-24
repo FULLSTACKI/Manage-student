@@ -15,8 +15,8 @@ class courseOut(BaseModel):
     def from_entity(course: Course):
         
         return courseOut(
-            id = course.id,
-            name = course.name,
+            id = course.course_id,
+            name = course.course_name,
             credits=course.credits,
             start_course=course.start_course,
             end_course=course.end_course,

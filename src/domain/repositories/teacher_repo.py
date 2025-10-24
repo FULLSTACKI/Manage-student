@@ -7,9 +7,9 @@ class IsTeacherRepo(ABC):
     def get_by_id(self, teacher_id: str) -> Teacher:
         pass 
     
-    @abstractmethod
-    def get_all(self) -> List[Teacher]:
-        pass 
+    # @abstractmethod
+    # def get_all(self) -> List[Teacher]:
+    #     pass 
     
     @abstractmethod
     def save(self, teacher_id: str) -> Teacher:

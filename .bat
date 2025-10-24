@@ -1,3 +1,3 @@
-@echo off
+@echo on
 start "FastAPI Server" cmd /k "python -m uvicorn src.presentation.api.main:app --reload"
-start "Streamlit UI" cmd /k "python -m streamlit run src/presentation/ui/components/layout.py"
+start "Streamlit UI" cmd /k "python -m streamlit run src/presentation/ui/Home.py"
