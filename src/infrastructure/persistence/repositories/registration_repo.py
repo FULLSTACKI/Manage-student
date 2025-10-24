@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from src.domain.entities import Registration
-from src.infrastructure.persistence.models import Registration as RegistrationModel
+from src.infrastructure.persistence.models import RegistrationModel
 from src.domain.repositories import IsRegistrationRepo
 
 def _to_model(entity: Registration) -> RegistrationModel:

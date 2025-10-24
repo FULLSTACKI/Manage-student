@@ -1,12 +1,14 @@
-from src.domain.repositories.student_repo import IsStudentRepo
+from src.domain.repositories import IsStudentRepo, IsDepartmentRepo, IsCourseRepo
 from src.application.dtos.student_dto import *
 from src.utils.exceptions import ValidationError
 from src.domain.entities.student import Student 
 from src.utils.validators import validate_upload_student_request, validate_id
 
 class StudentManagement:
-    def __init__(self, student_repo: IsStudentRepo):
+    def __init__(self, student_repo: IsStudentRepo, course_repo: IsCourseRepo, department_repo: IsDepartmentRepo):
         self.student_repo = student_repo
+        self.department_repo = department_repo
+        self.course_repo = course_repo
 
     def upload(self, req: UploadStudentRequest) -> UploadStudentResponse:
         errors = validate_upload_student_request(
@@ -40,23 +42,25 @@ class StudentManagement:
             student=student_out
         )
         
-    def get_all(self) -> List[studentOut]:
-        list_student = self.student_repo.get_all()
-        if not list_student:
-            raise ValidationError("NOT_FOUND",detail="student not exist")
-        try:
-            return [studentOut(
-                id = student.student_id,
-                name = student.student_name,
-                email = student.email,
-                birthday = f"{student.birthday}",
-                age = f"{student.age}",
-                sex = student.sex,
-                department_id=student.department_id
-            )
-            for student in list_student]
-        except Exception as e:
-            raise e
+    def get_filter_options(self, columns: List[str]):
+        filters = {}
+
+        if "department_name" in columns:
+            filters["departments"] = [
+                {"id": d.department_id, "name": d.department_name}
+                for d in self.department_repo.get_filter_all()
+            ]
+
+        if "course_name" in columns:
+            filters["courses"] = [
+                {"id": c.course_id, "name": c.course_name}
+                for c in self.course_repo.get_filter_all()
+            ]
+
+        return StudentFilterOption(
+            departments=filters.get("departments"),
+            courses=filters.get("courses")
+        )
         
     def get_by_id(self, student_id: str) -> Student:
         if not validate_id(student_id):

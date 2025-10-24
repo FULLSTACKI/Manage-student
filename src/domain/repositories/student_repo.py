@@ -8,9 +8,5 @@ class IsStudentRepo(ABC):
         pass
     
     @abstractmethod
-    def get_all(self) -> List[Student] | None:
-        pass
-    
-    @abstractmethod
     def save(self, req_student: Student): 
         pass

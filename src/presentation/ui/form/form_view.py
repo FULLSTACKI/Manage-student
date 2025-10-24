@@ -1,11 +1,7 @@
-import os
 import streamlit as st
 import requests
 import pandas as pd
-from dotenv import load_dotenv
-
-load_dotenv()
-api_base = os.getenv("API_BASE")
+from src.presentation.ui import api_base
 
 def view_score():
     st.title("View student score")
@@ -44,7 +40,7 @@ def view_score():
                         st.json(data)
             except requests.exceptions.RequestException as e:
                 st.error(f"Failed to connect to API: {e}")
-                
+
 def view_student():
     st.subheader("Danh sách Sinh viên")
     with st.form("view_form", clear_on_submit=True):
@@ -61,7 +57,6 @@ def view_student():
                 resp.raise_for_status()
                 try:
                     data = resp.json()
-                    # st.json(data)
                 except ValueError:
                     st.error(f"Invalid JSON response (status {resp.status_code})")
                     st.write(resp.text)
@@ -70,8 +65,8 @@ def view_student():
                         # Expecting structure like { "student": {...} }
                         if isinstance(data, dict) and "student" in data:
                             st.success("Student retrieved successfully")
-                            st.subheader("📊 Thông tin Sinh viên")
                             st.markdown("---")
+                            st.subheader("📊 Thông tin Sinh viên")
                             student = data["student"]
                             with st.container(border=True):
                                 col_info, col_actions = st.columns([4, 1])

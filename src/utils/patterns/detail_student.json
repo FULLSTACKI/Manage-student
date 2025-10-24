@@ -1,0 +1,29 @@
+{
+    "display_name": "Bảng danh sách Sinh viên",
+    "columns": [
+        {
+            "key": "student_id",
+            "label": "Mã Sinh viên"
+        },
+        {
+            "key": "student_name",
+            "label": "Họ và Tên"
+        },
+        {
+            "key": "email",
+            "label": "Email"
+        },
+        {
+            "key": "birthday",
+            "label": "Ngày sinh"
+        },
+        {
+            "key": "department_name",
+            "label": "Khoa"
+        },
+        {
+            "key": "course_name",
+            "label": "Môn"
+        }
+    ]
+}

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from src.domain.repositories import IsStudentRepo
-from src.infrastructure.persistence.models import Student as StudentModel
+from src.infrastructure.persistence.models import StudentModel
 from src.domain.entities import Student
 from typing import List
 
@@ -37,24 +37,6 @@ class StudentRepo(IsStudentRepo):
             return _to_entity(db_model)
         return None
     
-    def get_all(self) -> List[Student]:
-        try:
-            data_row = self.db_session.query(StudentModel).all()
-            if data_row:
-                return [Student(
-                    student_id=data.student_id,
-                    student_name=data.student_name,
-                    email=data.email,
-                    birthday=data.birthday,
-                    age=data.age,
-                    sex=data.sex,
-                    department_id=data.department_id
-                )
-                for data in data_row]
-        except IntegrityError as e:
-            raise e
-        except Exception as f:
-            raise f
     
     def save(self, req_student: Student) -> Student:
         existing = self.get_by_id(req_student.student_id)

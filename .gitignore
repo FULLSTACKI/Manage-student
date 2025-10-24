@@ -1,2 +1,4 @@
 .env 
-#notebooks
+notebooks
+student_score.db
+.bat

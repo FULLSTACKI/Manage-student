@@ -1,6 +1,6 @@
 import streamlit as st 
 from src.presentation.ui.form import *
-from src.presentation.ui.view_all_detail import *
+from src.presentation.ui.components import *
 
 if 'students' not in st.session_state:
     st.session_state.students = [
@@ -17,20 +17,21 @@ def manage_ui():
     tab_student, tab_course, tab_score = st.tabs(["🎓 Sinh viên", "📚 Khóa học", "📝 Điểm số"])
     
     with tab_student.container(border=True):
-        column_s1, column_s2, column_s3 = st.columns([2, 2, 1])
+        column_s1, column_s2, column_s3 = st.columns([3, 3, 1])
         
         with column_s1:
             view_student()
             
         with column_s2:
-            upload_student()
-            
-        with column_s3:
             st.subheader("📝 Chỉnh sửa")
             st.info("Nhấn nút 'Sửa' ở danh sách để chỉnh sửa thông tin.")
             
-        with st.expander("Xem toàn bộ Danh sách Sinh viên"):
-            view_all_student_detail()
+        with column_s3:
+            if st.button("➕ Thêm"):
+                upload_student()
+            
+        with st.expander("Xem Danh sách thông tin Sinh viên"):
+            table_detail_student()
 
     # Bạn có thể tiếp tục thiết kế cho tab_course và tab_score theo cách tương tự
     with tab_course:

@@ -9,7 +9,7 @@ import json
 router = APIRouter()
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent.parent
 # gửi request GET /analytics_view với body:
-@router.get("/analytics_view", response_model=List[AnalyticsViewDTO])
+@router.get("/overview/table_analytic", response_model=List[AnalyticsViewDTO])
 def get_analytics_view():
     # Xây dựng đường dẫn từ thư mục gốc, dễ đọc và an toàn hơn
     PATH = PROJECT_ROOT / "src/utils/patterns/analytic.json"
@@ -38,7 +38,7 @@ def get_analytics_view():
         # Bắt các lỗi khác
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {e}")
     
-@router.post("/analytic_post", response_model=List[AnalyticsResponse])
+@router.post("/overview/analytic_post", response_model=List[AnalyticsResponse])
 def upload_analytic_department(req: AnalyticsRequest, service: AnalyticManagement = Depends(get_analytic_department_service)):
     try:
         query_out = service.get_analytic_department_view(req)

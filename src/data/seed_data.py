@@ -3,10 +3,8 @@ from pathlib import Path
 from sqlalchemy.exc import SQLAlchemyError
 
 from src.infrastructure.persistence.db import SessionLocal
-from src.infrastructure.persistence.models import Student, Course, Registration, Score, Department
-from src.domain.services.compare_date_service import parse_date
-from src.domain.services.age_service import compute_age
-from src.domain.services.gpa_service import compute_gpa
+from src.infrastructure.persistence.models import *
+from src.domain.services import *
 
 DATA_DIR = Path(__file__).parent / "seed"
 
@@ -19,7 +17,7 @@ def seed_data_from_csv(db):
             for _, row in df_courses.iterrows():
                 if pd.isna(row.get("course_id")):
                     continue
-                course = Course(
+                course = CourseModel(
                     course_id=row.get("course_id"),
                     course_name=row.get("course_name"),
                     credits=int(row.get("credits", 0)),
@@ -36,7 +34,7 @@ def seed_data_from_csv(db):
             for _, row in df_students.iterrows():
                 if pd.isna(row.get("student_id")):
                     continue
-                student = Student(
+                student = StudentModel(
                     student_id=row.get("student_id"),
                     student_name=row.get("student_name"),
                     birthday=parse_date(row.get("birthday", "")),
@@ -54,7 +52,7 @@ def seed_data_from_csv(db):
             for _, row in df_departments.iterrows():
                 if pd.isna(row.get("department_id")):
                     continue
-                department = Department(
+                department = DepartmentModel(
                     department_id = row.get("department_id"),
                     department_name = row.get("department_name")
                 )
@@ -67,7 +65,7 @@ def seed_data_from_csv(db):
             for _, row in df_scores.iterrows():
                 if pd.isna(row.get("student_id")) or pd.isna(row.get("course_id")):
                     continue
-                score = Score(
+                score = ScoreModel(
                     student_id = row.get("student_id"),
                     course_id = row.get("course_id"),
                     coursework_grade = row.get("coursework_grade"),
@@ -85,13 +83,49 @@ def seed_data_from_csv(db):
             for _, row in df_registrations.iterrows():
                 if pd.isna(row.get("student_id")) or pd.isna(row.get("course_id")):
                     continue
-                registration = Registration(
+                registration = RegistrationModel(
                     student_id=row.get("student_id"),
                     course_id=row.get("course_id"),
                     registered_at=parse_date(row.get("registered_at", ""))
                 )
                 db.merge(registration)
-        
+                
+        # Seed teachers
+        teacher_file = DATA_DIR / "teachers.csv"
+        if teacher_file.exists():   
+            df_teachers = pd.read_csv(teacher_file)
+            for _, row in df_teachers.iterrows():
+                if pd.isna(row.get("teacher_id")):
+                    continue
+                teacher = TeacherModel(
+                    teacher_id=row.get("teacher_id"),
+                    teacher_name=row.get("teacher_name"),
+                    email=row.get("email"),
+                    birthday=parse_date(row.get("birthday", "")),
+                    age=compute_age(parse_date(row.get("birthday", ""))),
+                    sex=row.get("sex"),
+                    department_id=row.get("department_id")
+                )
+                db.merge(teacher)
+                
+        # Seed classrooms
+        classroom_file = DATA_DIR / "classrooms.csv"
+        if classroom_file.exists():
+            df_classrooms = pd.read_csv(classroom_file)
+            for _, row in df_classrooms.iterrows():
+                if pd.isna(row.get("class_id")) or pd.isna(row.get("course_id")) or pd.isna(row.get("teacher_id")):
+                    continue
+                classroom = ClassroomModel(
+                    class_id = row.get("class_id"),
+                    course_id = row.get("course_id"),
+                    teacher_id = row.get("teacher_id"),
+                    semester = row.get("semester"),
+                    academic_year = row.get("academic_year"),
+                    start_time = parse_date(row.get("start_time")),
+                    end_time = compute_end_course(parse_date(row.get("start_time")))
+                )
+                db.merge(classroom)
+                   
         db.commit()
         print("✅ Seeding completed!\n")
     except SQLAlchemyError as e:
@@ -103,7 +137,7 @@ def seed_data_from_csv(db):
 def seed_data_if_empty():
     db = SessionLocal()
     try:
-        student_count = db.query(Student).count()
+        student_count = db.query(StudentModel).count()
         if student_count == 0:
             seed_data_from_csv(db)
         else:

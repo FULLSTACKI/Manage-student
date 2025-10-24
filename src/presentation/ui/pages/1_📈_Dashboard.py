@@ -2,11 +2,12 @@ import streamlit as st
 import httpx
 import time
 import asyncio
-from src.presentation.ui import footer, api_base
+from src.presentation.ui.components import footer
+from src.presentation.ui import api_base
 
 async def get_analytic_view():
     try:
-        url = api_base.rstrip("/") + "/analytics_view"
+        url = api_base.rstrip("/") + "/overview/table_analytic"
         async with httpx.AsyncClient() as client:
             response = await client.get(url, timeout=10)
             response.raise_for_status()
@@ -28,7 +29,7 @@ async def get_overview():
 
 async def _post_query(req: dict):
     try:
-        url = api_base.rstrip("/") + "/analytic_post"
+        url = api_base.rstrip("/") + "/overview/analytic_post"
         async with httpx.AsyncClient() as client:
             resp = await client.post(url, json=req, timeout=60)
             return resp.json()
@@ -58,7 +59,7 @@ def Search(analytics_views):
         view_config = analytics_views[0]
         
         # --- XÂY DỰNG CÁC SELECTBOX PHỤ THUỘC ---
-        st.header("Tùy chọn phân tích")
+        st.subheader(view_config.get("display_name"))
         
         # 1. Selectbox cho Dimension (Cột X)
         # Tạo map từ display name sang key để dễ xử lý

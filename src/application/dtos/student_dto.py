@@ -44,3 +44,15 @@ class GetStudentResponse(BaseModel):
     success: bool
     message: Optional[str] = None
     student: Optional[studentOut] = None
+    
+class Option(BaseModel): 
+    id: str
+    name: str 
+    
+class StudentFilterOption(BaseModel):
+    departments: List[Option] = None
+    courses: List[Option] = None
+    
+class StudentQueryByColumns(BaseModel):
+    display_name: str 
+    columns: List[dict]

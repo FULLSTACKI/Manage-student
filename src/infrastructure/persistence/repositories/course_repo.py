@@ -1,8 +1,10 @@
 from sqlalchemy.orm import Session
-from src.infrastructure.persistence.models import Course as CourseModel
+from src.infrastructure.persistence.models import CourseModel
 from src.domain.repositories.course_repo import IsCourseRepo
 from src.domain.entities.course import Course
 from sqlalchemy.exc import IntegrityError
+from typing import List
+from sqlalchemy import text
 
 def _to_model(entity: Course) -> CourseModel:
     return CourseModel(
@@ -27,7 +29,17 @@ def _to_entity(model: CourseModel) -> Course:
 class CourseRepo(IsCourseRepo):
     def __init__(self, db_session: Session):
         self.db = db_session
-
+        
+    def get_filter_all(self) -> List[Course]:
+        try:
+            query = text("SELECT course_id, course_name FROM courses")
+            result = self.db.execute(query)
+            course_row = result.mappings().all()
+            list_course = [Course(**data) for data in course_row]
+            return list_course
+        except Exception as e:
+            raise  e
+        
     def get_by_id(self, course_id: str) -> Course:
         course = self.db.query(CourseModel).filter(CourseModel.course_id == course_id).first()
         if course:

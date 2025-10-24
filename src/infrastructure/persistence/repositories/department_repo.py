@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from src.infrastructure.persistence.models import Department as DepartmentModel
+from src.infrastructure.persistence.models import DepartmentModel
 from src.domain.repositories import IsDepartmentRepo
 from src.domain.entities import Department
 from sqlalchemy.exc import IntegrityError
@@ -22,7 +22,7 @@ class DepartmentRepo(IsDepartmentRepo):
     def __init__(self, db_session: Session):
         self.db = db_session
         
-    def get_all(self) -> List[Department]:
+    def get_filter_all(self) -> List[Department]:
         try:
             query = text("SELECT * FROM departments")
             result = self.db.execute(query)

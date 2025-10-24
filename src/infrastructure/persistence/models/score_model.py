@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from src.infrastructure.persistence.db import Base    
 
-class Score(Base):
+class ScoreModel(Base):
     __tablename__ = "scores"
     student_id = Column(String, ForeignKey("students.student_id"), primary_key=True)
     course_id = Column(String, ForeignKey("courses.course_id"), primary_key=True)
@@ -11,5 +11,5 @@ class Score(Base):
     final_grade = Column(Float, nullable=False)
     gpa = Column(Float, nullable=False)
 
-    student = relationship("Student", back_populates="scores")
-    course = relationship("Course", back_populates="scores")
+    student = relationship("StudentModel", back_populates="scores")
+    course = relationship("CourseModel", back_populates="scores")

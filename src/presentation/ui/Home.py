@@ -1,4 +1,4 @@
-from src.presentation.ui import footer
+from src.presentation.ui.components import footer
 import streamlit as st 
 
 def main():

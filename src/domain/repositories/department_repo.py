@@ -8,7 +8,7 @@ class IsDepartmentRepo(ABC):
     def get_by_id(self, department_id:str) -> Department | None:
         pass
     @abstractmethod
-    def get_all(self) -> List[Department] | None:
+    def get_filter_all(self) -> List[Department] | None:
         pass
     @abstractmethod
     def save(self, req_department: Department) -> Department | None: 

@@ -1,3 +1,5 @@
-from .components.layout import *
+import os
+from dotenv import load_dotenv
 
-api_base = "http://127.0.0.1:8000"
+load_dotenv()
+api_base = os.getenv("API_BASE")

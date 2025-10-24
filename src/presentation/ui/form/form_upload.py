@@ -1,10 +1,6 @@
-import os
 import streamlit as st
 import requests  
-from dotenv import load_dotenv
-
-load_dotenv()
-api_base = os.getenv("API_BASE")
+from src.presentation.ui import api_base
 
 def upload_score():
     st.title("Upload student score")
@@ -54,8 +50,8 @@ def upload_score():
             except requests.exceptions.RequestException as e:
                 st.error(f"Failed to connect to API: {e}")
 
+@st.dialog("➕ Thêm Sinh viên mới", width="large")
 def upload_student():    
-    st.subheader("➕ Thêm mới")
     with st.form("upload_form", clear_on_submit=True):
         id = st.text_input("Student ID")
         name = st.text_input("Name")
