@@ -50,5 +50,18 @@ class Option(BaseModel):
     name: str 
     
 class StudentFilterOption(BaseModel):
-    departments: List[Option] = None
-    courses: List[Option] = None
+    departments: List[Option]
+    courses: List[Option] 
+    
+class StudentDetailResponse(BaseModel):
+    student_id: str
+    student_name: str 
+    email: str
+    birthday: str 
+    departments: str
+    courses: str
+    
+class StudentDetailRequest(BaseModel):
+    columns: List[str] 
+    department_id: List[str] = None
+    course_id: List[str] = None

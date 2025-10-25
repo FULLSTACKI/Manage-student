@@ -1,7 +1,7 @@
 from src.domain.repositories import IsStudentRepo, IsDepartmentRepo, IsCourseRepo
 from src.application.dtos.student_dto import *
 from src.utils.exceptions import ValidationError
-from src.domain.entities.student import Student 
+from src.domain.entities.student import Student
 from src.utils.validators import validate_upload_student_request, validate_id
 
 class StudentManagement:
@@ -43,24 +43,39 @@ class StudentManagement:
         )
         
     def get_filter_options(self, columns: List[str]):
-        filters = {}
+        departments = []
+        courses = []
 
-        if "department_name" in columns:
-            filters["departments"] = [
-                {"id": d.id, "name": d.name}
-                for d in self.department_repo.get_filter_all()
-            ]
+        if "departments" in columns:
+            deps = self.department_repo.get_filter_all()
+            if deps:
+                departments = [{"id": d.id, "name": d.name} for d in deps]
+            else:
+                departments = []
 
-        if "course_name" in columns:
-            filters["courses"] = [
-                {"id": c.id, "name": c.name}
-                for c in self.course_repo.get_filter_all()
-            ]
+        # Lấy courses nếu cần
+        if "courses" in columns:
+            crs = self.course_repo.get_filter_all()
+            if crs:
+                courses = [{"id": c.id, "name": c.name} for c in crs]
+            else:
+                courses = []
 
         return StudentFilterOption(
-            departments=filters.get("departments"),
-            courses=filters.get("courses")
+            departments=departments,
+            courses=courses
         )
+    
+    def get_detail_students(self, req: StudentDetailRequest) -> List[StudentDetailResponse]:
+        list_student = self.student_repo.get_list_detail_student(req.columns,req.department_id,req.course_id)
+        return [StudentDetailResponse(
+            student_id=student.student_id,
+            student_name=student.student_name,
+            email=student.email,
+            birthday=f"student.birthday",
+            departments=student.department_name,
+            courses=student.course_name
+        ) for student in list_student]
         
     def get_by_id(self, student_id: str) -> Student:
         if not validate_id(student_id):
@@ -70,7 +85,7 @@ class StudentManagement:
             raise ValidationError("NOT_FOUND",detail=f"student {student_id} not found")
         return student
 
-    def view(self, student_id: str) -> GetStudentResponse:
+    def view(self, student_id: str) -> GetStudentResponse:   
         student_entity = self.get_by_id(student_id)
         student_out = studentOut.from_entity(student_entity)
         return GetStudentResponse(
@@ -78,3 +93,5 @@ class StudentManagement:
             message="Student retrieved successfully",
             student=student_out
         )
+        
+    

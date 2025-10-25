@@ -6,7 +6,9 @@ class IsStudentRepo(ABC):
     @abstractmethod
     def get_by_id(self, student_id:str) -> Student | None:
         pass
-    
+    @abstractmethod
+    def get_list_detail_student(self, col: List[str]) -> List[Student] | None:
+        pass
     @abstractmethod
     def save(self, req_student: Student): 
         pass

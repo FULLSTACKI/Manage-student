@@ -5,6 +5,7 @@ from src.application.dtos.student_dto import *
 from src.utils import AppError, to_http_exception, HTTPException
 import json
 from pathlib import Path 
+import traceback
 
 router = APIRouter()
 PROJECT_ROOT = Path(__file__).resolve().parents[4]
@@ -66,4 +67,16 @@ def get_filter_options(columns: str,service: StudentManagement = Depends(get_stu
     except AppError as e:
         raise to_http_exception(getattr(e, "code", "INTERNAL_ERROR"), str(e))
     except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@router.post("/student/list", response_model=List[StudentDetailResponse])
+def get_list_student(req: StudentDetailRequest,service: StudentManagement = Depends(get_student_service)):
+    try:
+        list_student = service.get_detail_students(req)
+        return list_student
+    except AppError as e:
+        raise to_http_exception(getattr(e, "code", "INTERNAL_ERROR"), str(e))
+    except Exception as e:
+        print("❌ ERROR TRACEBACK ❌")
+        traceback.print_exc()   # 👉 in toàn bộ lỗi ra terminal
         raise HTTPException(status_code=500, detail=str(e))

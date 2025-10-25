@@ -6,18 +6,6 @@ from sqlalchemy.exc import IntegrityError
 from typing import *
 from sqlalchemy import text
 
-def _to_model(entity: Department) -> DepartmentModel:
-    return DepartmentModel(
-        department_id = entity.department_id,
-        department_name = entity.department_name
-    )
-    
-def _to_entity(model: DepartmentModel) -> Department:
-    return Department(
-        department_id = model.department_id,
-        department_name = model.department_name
-    )
-
 class DepartmentRepo(IsDepartmentRepo):
     def __init__(self, db_session: Session):
         self.db = db_session

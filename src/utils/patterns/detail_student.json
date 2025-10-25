@@ -18,11 +18,11 @@
             "label": "Ngày sinh"
         },
         {
-            "key": "department_name",
+            "key": "departments",
             "label": "Khoa"
         },
         {
-            "key": "course_name",
+            "key": "courses",
             "label": "Môn"
         }
     ]

@@ -30,8 +30,8 @@ def manage_ui():
             if st.button("➕ Thêm"):
                 upload_student()
             
-        with st.expander("Xem Danh sách thông tin Sinh viên"):
-            st.info(table_detail_student())
+        with st.expander("Xem Danh sách thông tin Sinh viên", expanded=True):
+            table_detail_student()
 
     # Bạn có thể tiếp tục thiết kế cho tab_course và tab_score theo cách tương tự
     with tab_course:

@@ -25,8 +25,8 @@ def on_shutdown():
     print("👋 Application shutting down, final backup done!")
     
 
-for router in list_routers:
-    app.include_router(router)
+# for router in list_routers:
+app.include_router(student_router)
 
 for route in app.routes:
     print(route.path)
