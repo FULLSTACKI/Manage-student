@@ -40,7 +40,9 @@ class StudentDetail:
     student_id: str
     student_name: str
     email: str
-    birthday: str
-    department_name: str
-    course_name: str
+    age: int
+    birthday: date
+    sex: str 
+    department_name: Optional[str] = None
+    course_name: Optional[str] = None
     

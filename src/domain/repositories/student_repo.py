@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.domain.entities.student import Student 
+from src.domain.entities import Student, StudentDetail
 from typing import List
 
 class IsStudentRepo(ABC):
@@ -11,4 +11,10 @@ class IsStudentRepo(ABC):
         pass
     @abstractmethod
     def save(self, req_student: Student): 
+        pass
+    @abstractmethod
+    def update(self, req: Student) -> StudentDetail:
+        pass
+    @abstractmethod
+    def deleted(self, student_id: str) -> StudentDetail:
         pass

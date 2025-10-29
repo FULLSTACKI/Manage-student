@@ -43,31 +43,31 @@ def table_detail_student():
     data_col = _get_columns()
     
     st.subheader(data_col["display_name"])
+    col1, col2, col3 = st.columns([2,1,1])
     
     if not data_col or "columns" not in data_col:
         st.error("❌ Không thể tải danh sách cột từ API. Vui lòng kiểm tra lại backend.")
         st.stop() 
+        
         
     map_col = {col["label"]: col for col in data_col["columns"]}
     map_label_to_key = {col["label"]: col["key"] for col in data_col["columns"]}
 
     # --- Session State init ---
     if "selected_columns" not in st.session_state:
-        st.session_state.selected_columns = list(map_col.keys())
+        st.session_state.selected_columns = [col["label"] for col in data_col["columns"] if col["key"] not in ["departments", "courses"]]
     if "selected_departments" not in st.session_state:
         st.session_state.selected_departments = ["All"]
     if "selected_courses" not in st.session_state:
         st.session_state.selected_courses = ["All"]
 
-    # --- Giao diện ---
-    col1, col2, col3 = st.columns([3, 1, 1])
-
     # 🔹 Chọn cột hiển thị
-    with col1:
+    with col1.container(): 
         selection = st.multiselect(
             "Select columns to display:",
             list(map_col.keys()),
-            default=st.session_state.selected_columns
+            default=st.session_state.selected_columns,
+            key="selected_columns"
         )
 
     # 🔹 Nếu chưa chọn cột thì dừng
@@ -83,45 +83,61 @@ def table_detail_student():
     map_dept = {d["name"]: d for d in data_filter["departments"]}
     map_course = {c["name"]: c for c in data_filter["courses"]}
 
-    # --- Filter khoa ---
-    with col3:
-        if "departments" in data_filter:
-            dept = st.multiselect(
-                "🏫 Department",
-                ["All"] + list(map_dept.keys()),
-                default=st.session_state.selected_departments,
-                key="selected_departments"
-            )
+    with col3.container():
+        dept_options = ["All"] + list(map_dept.keys())
 
-    # --- Filter môn học ---
-    with col2:
-        if "courses" in data_filter:
-            course = st.multiselect(
-                "📘 Course",
-                ["All"] + list(map_course.keys()),
-                default=st.session_state.selected_courses,
-                key="selected_courses"
-            )
+        # Đảm bảo giá trị mặc định hợp lệ
+        valid_defaults = [d for d in st.session_state.selected_departments if d in dept_options]
+        if not valid_defaults:
+            valid_defaults = ["All"]
 
+        dept = st.multiselect(
+            "🏫 Department",
+            dept_options,
+            default=valid_defaults,
+            key="selected_departments",
+        )
+
+    with col2.container():
+        course_options = ["All"] + list(map_course.keys())
+
+        valid_courses = [c for c in st.session_state.selected_courses if c in course_options]
+        if not valid_courses:
+            valid_courses = ["All"]
+
+        course = st.multiselect(
+            "📘 Course",
+            course_options,
+            default=valid_courses,
+            key="selected_courses"
+        )
+        
     # --- Tạo payload API ---
     payload = {
         "columns": list_col
     }
-
-    if "All" not in st.session_state.selected_departments:
-        payload["department_id"] = [map_dept[d]["id"] for d in st.session_state.selected_departments]
-
+    
     if "All" not in st.session_state.selected_courses:
         payload["course_id"] = [map_course[c]["id"] for c in st.session_state.selected_courses]
+    if "All" not in st.session_state.selected_departments:
+        payload["department_id"] = [map_dept[d]["id"] for d in st.session_state.selected_departments]
+        
+    # --- Reset filters khi bỏ chọn cột ---
+    # Nếu người dùng bỏ chọn cột "Khoa", reset lại filter khoa về ["All"]
+    if "Khoa" not in selection and st.session_state.get("selected_departments", None) != ["All"]:
+        st.session_state.selected_departments = ["All"]
 
+    # Nếu người dùng bỏ chọn cột "Môn", reset lại filter môn về ["All"]
+    if "Môn" not in selection and st.session_state.get("selected_courses", None) != ["All"]:
+        st.session_state.selected_courses = ["All"]
+    
     # --- Gọi API ---
     data_student = _get_students(payload)
     
     # --- Mapping lại label cho bảng ---
     mapped_students = [
-        {col["label"]: student.get(col["key"], None) for col in data_col["columns"]}
+        {col["label"]: student.get(col["key"], None) for col in data_col["columns"] if col["label"] in selection}
         for student in data_student
     ]
-    
-    # --- Hiển thị bảng ---
+
     st.table(mapped_students)

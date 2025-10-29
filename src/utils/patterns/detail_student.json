@@ -14,8 +14,16 @@
             "label": "Email"
         },
         {
+            "key": "age",
+            "label": "Tuổi"
+        },
+        {
             "key": "birthday",
             "label": "Ngày sinh"
+        },
+        {
+            "key": "sex",
+            "label": "Giới tính"
         },
         {
             "key": "departments",

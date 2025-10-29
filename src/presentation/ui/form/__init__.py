@@ -1,2 +1,2 @@
-from .form_upload import *
-from .form_view import *
+from .upload.student import *
+from .view.student import *

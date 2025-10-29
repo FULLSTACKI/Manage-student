@@ -13,5 +13,5 @@ class StudentModel(Base):
     department_id = Column(String, ForeignKey("departments.department_id"), primary_key=True)
     
     department = relationship("DepartmentModel", back_populates="students")
-    scores = relationship("ScoreModel", back_populates="student")
+    scores = relationship("ScoreModel", back_populates="student", cascade="all, delete-orphan")
     registrations = relationship("RegistrationModel", back_populates="student", cascade="all, delete-orphan")

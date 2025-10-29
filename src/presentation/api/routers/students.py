@@ -11,7 +11,7 @@ router = APIRouter()
 PROJECT_ROOT = Path(__file__).resolve().parents[4]
 
 # gửi request POST /upload_student với body:
-@router.post("/student", response_model=UploadStudentResponse)
+@router.post("/student/upload", response_model=StudentResponse)
 def upload_student(request: UploadStudentRequest,service: StudentManagement = Depends(get_student_service)):
     try:
         student_out = service.upload(request)
@@ -19,12 +19,26 @@ def upload_student(request: UploadStudentRequest,service: StudentManagement = De
     except AppError as e:
         raise to_http_exception(getattr(e, "code", "INTERNAL_ERROR"), str(e))
     except Exception as e:
+        print("❌ ERROR TRACEBACK ❌")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@router.post("/student/update", response_model=StudentResponse)
+def update_student(request: UploadStudentRequest,service: StudentManagement = Depends(get_student_service)):
+    try:
+        student_out = service.update(request)
+        return student_out
+    except AppError as e:
+        raise to_http_exception(getattr(e, "code", "INTERNAL_ERROR"), str(e))
+    except Exception as e:
+        print("❌ ERROR TRACEBACK ❌")
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
     
 # gửi request POST /get_student với body:
-@router.get("/student", response_model=GetStudentResponse)
+@router.get("/student", response_model=StudentResponse)
 def get_student_by_id(student_id: str, service: StudentManagement = Depends(get_student_service)):
-    try:
+    try:    
         student_out = service.view(student_id)
         return student_out
     except AppError as e:
@@ -69,7 +83,7 @@ def get_filter_options(columns: str,service: StudentManagement = Depends(get_stu
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-@router.post("/student/list", response_model=List[StudentDetailResponse])
+@router.post("/student/list", response_model=List[studentOut])
 def get_list_student(req: StudentDetailRequest,service: StudentManagement = Depends(get_student_service)):
     try:
         list_student = service.get_detail_students(req)
@@ -80,3 +94,18 @@ def get_list_student(req: StudentDetailRequest,service: StudentManagement = Depe
         print("❌ ERROR TRACEBACK ❌")
         traceback.print_exc()   # 👉 in toàn bộ lỗi ra terminal
         raise HTTPException(status_code=500, detail=str(e))
+    
+@router.delete("/student/{student_id}", response_model=StudentResponse)
+def delete_student_endpoint(student_id: str, service: StudentManagement = Depends(get_student_service)):
+    try:
+        # Gọi service để thực hiện nghiệp vụ xóa
+        deleted_student = service.delete_student(student_id)
+        return deleted_student
+    except ValidationError as e:
+        # Lỗi validation từ Service
+        raise HTTPException(status_code=400, detail=e.detail)
+    except Exception as e:
+        # Bắt các lỗi không mong muốn khác
+        print("❌ Lỗi không xác định ❌")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Lỗi server không xác định: {e}")

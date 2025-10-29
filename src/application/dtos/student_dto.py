@@ -1,27 +1,28 @@
 from pydantic import BaseModel
 from typing import *
-from datetime import date as Date
-from src.domain.entities import Student
+from src.domain.entities import StudentDetail
 
 #Define student data models
 class studentOut(BaseModel):
-    id: str
-    name: str
+    student_id: str
+    student_name: str
     email: str
-    birthday: str
     age: str
+    birthday: str
     sex: str
-    department_id: str
+    departments: Optional[str] = None
+    courses: Optional[str] = None
 
-    def from_entity(student: Student):
+    def from_entity(student: StudentDetail):
         return studentOut(
-            id = student.student_id,
-            name = student.student_name,
+            student_id = student.student_id,
+            student_name = student.student_name,
             email = student.email,
-            birthday = f"{student.birthday}",
             age = f"{student.age}",
+            birthday = f"{student.birthday}",
             sex = student.sex,
-            department_id=student.department_id
+            departments=student.department_name,
+            courses=student.course_name
         )
         
     
@@ -35,12 +36,7 @@ class UploadStudentRequest(BaseModel):
     department_id: str
     
 
-class UploadStudentResponse(BaseModel):
-    success: bool
-    message: Optional[str] = None
-    student: Optional[studentOut] = None
-
-class GetStudentResponse(BaseModel):
+class StudentResponse(BaseModel):
     success: bool
     message: Optional[str] = None
     student: Optional[studentOut] = None
@@ -50,16 +46,8 @@ class Option(BaseModel):
     name: str 
     
 class StudentFilterOption(BaseModel):
-    departments: List[Option]
-    courses: List[Option] 
-    
-class StudentDetailResponse(BaseModel):
-    student_id: str
-    student_name: str 
-    email: str
-    birthday: str 
-    departments: str
-    courses: str
+    departments: List[Option] = None
+    courses: List[Option] = None
     
 class StudentDetailRequest(BaseModel):
     columns: List[str] 
