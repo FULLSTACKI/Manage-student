@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 from src.infrastructure.persistence.models import CourseModel
 from src.domain.repositories.course_repo import IsCourseRepo
-from src.domain.entities import Course, Option
+from src.domain.entities import Course
+from src.application.dtos import Option
 from sqlalchemy.exc import IntegrityError
 from typing import List
 from sqlalchemy import text

@@ -1,101 +1,102 @@
-student_id,student_name,email,birthday,sex,department_id
-S001,Nguyen Van A,a@example.com,2000-01-15,M,D001
-S002,Tran Thi B,b@example.com,2001-05-20,F,D002
-S003,Le Van C,c@example.com,1999-07-30,M,D001
-S004,Pham Thi D,d@example.com,2002-03-10,F,D005
-S005,Hoang Van E,e@example.com,2000-11-25,M,D003
-S006,Do Thi F,f@example.com,2003-08-01,F,D006
-S007,Phan Van G,g@example.com,1998-04-12,M,D007
-S008,Vu Thi H,h@example.com,2000-06-28,F,D002
-S009,Dinh Van I,i@example.com,2001-02-18,M,D004
-S010,Bui Thi K,k@example.com,1999-10-05,F,D008
-S011,Ngo Van L,l@example.com,2002-12-03,M,D009
-S012,Ly Thi M,m@example.com,2003-01-22,F,D010
-S013,Trinh Van N,n@example.com,1998-09-17,M,D001
-S014,Chau Thi P,p@example.com,2000-07-09,F,D005
-S015,Duong Van Q,q@example.com,2001-03-07,M,D003
-S016,Dao Thi R,r@example.com,2002-05-14,F,D006
-S017,Dang Van S,s@example.com,1999-11-01,M,D007
-S018,Ho Thi T,t@example.com,2000-04-24,F,D004
-S019,Lam Van U,u@example.com,2003-06-19,M,D009
-S020,Mai Thi V,v@example.com,2001-09-11,F,D002
-S021,Nguyen Van W,w@example.com,2002-04-10,M,D008
-S022,Tran Thi X,x@example.com,2003-07-22,F,D003
-S023,Le Van Y,y@example.com,2001-11-05,M,D001
-S024,Pham Thi Z,z@example.com,2000-02-18,F,D010
-S025,Hoang Van AA,aa@example.com,2002-09-30,M,D005
-S026,Do Thi BB,bb@example.com,2003-01-14,F,D004
-S027,Phan Van CC,cc@example.com,1999-08-08,M,D007
-S028,Vu Thi DD,dd@example.com,2001-06-12,F,D006
-S029,Dinh Van EE,ee@example.com,2000-10-25,M,D002
-S030,Bui Thi FF,ff@example.com,2002-03-29,F,D009
-S031,Ngo Van GG,gg@example.com,2003-05-01,M,D001
-S032,Ly Thi HH,hh@example.com,1998-12-15,F,D003
-S033,Trinh Van II,ii@example.com,2001-04-20,M,D010
-S034,Chau Thi KK,kk@example.com,2000-08-11,F,D008
-S035,Duong Van LL,ll@example.com,2003-02-23,M,D005
-S036,Dao Thi MM,mm@example.com,2002-07-07,F,D007
-S037,Dang Van NN,nn@example.com,1999-03-16,M,D004
-S038,Ho Thi OO,oo@example.com,2000-09-02,F,D006
-S039,Lam Van PP,pp@example.com,2001-12-28,M,D002
-S040,Mai Thi QQ,qq@example.com,2003-10-19,F,D001
-S041,Đặng Văn Khang,s041@example.com,2002-05-11,M,D007
-S042,Lê Thị Trang,s042@example.com,2002-05-27,F,D003
-S043,Hoàng Văn Đức,s043@example.com,2001-03-23,M,D003
-S044,Phạm Văn Sơn,s044@example.com,2002-07-08,M,D001
-S045,Vũ Thị Phương,s045@example.com,2001-03-01,F,D001
-S046,Đinh Văn Bảo,s046@example.com,2004-11-20,M,D008
-S047,Bùi Thị Nga,s047@example.com,2001-02-02,F,D006
-S048,Lý Thị Hương,s048@example.com,2003-07-28,F,D001
-S049,Bùi Thị Hà,s049@example.com,2000-11-20,F,D002
-S050,Lý Văn Tuấn,s050@example.com,2000-08-14,M,D008
-S051,Phan Thị Thu,s051@example.com,2004-10-02,F,D002
-S052,Đỗ Văn Việt,s052@example.com,2003-07-23,M,D009
-S053,Đặng Thị Thảo,s053@example.com,2003-12-26,F,D010
-S054,Lý Thị Ngọc,s054@example.com,2000-11-22,F,D004
-S055,Đỗ Văn Long,s055@example.com,2002-05-18,M,D006
-S056,Hoàng Văn Khang,s056@example.com,1999-01-22,M,D003
-S057,Vũ Văn Bảo,s057@example.com,2003-09-02,M,D003
-S058,Lý Văn Đức,s058@example.com,2002-12-29,M,D004
-S059,Phan Văn Long,s059@example.com,2002-10-09,M,D010
-S060,Phan Thị Huyền,s060@example.com,2001-08-05,F,D009
-S061,Lê Thị Linh,s061@example.com,2004-10-08,F,D004
-S062,Đinh Văn Minh,s062@example.com,2004-11-09,M,D006
-S063,Nguyễn Văn Quang,s063@example.com,2004-03-22,M,D008
-S064,Đỗ Thị Thảo,s064@example.com,2003-11-09,F,D008
-S065,Bùi Văn Hải,s065@example.com,2000-01-09,M,D007
-S066,Vũ Văn Minh,s066@example.com,1999-01-05,M,D002
-S067,Nguyễn Thị Ngọc,s067@example.com,2002-09-02,F,D009
-S068,Trần Văn Tuấn,s068@example.com,2000-02-06,M,D008
-S069,Đỗ Thị Huyền,s069@example.com,2004-07-07,F,D009
-S070,Đỗ Thị Trang,s070@example.com,2003-05-15,F,D003
-S071,Lê Văn Việt,s071@example.com,2000-03-13,M,D003
-S072,Nguyễn Thị Phương,s072@example.com,2002-10-14,F,D004
-S073,Lê Thị Nga,s073@example.com,2002-01-03,F,D003
-S074,Trần Thị Linh,s074@example.com,2001-01-16,F,D007
-S075,Lý Thị Trang,s075@example.com,2003-05-08,F,D007
-S076,Đinh Văn Sơn,s076@example.com,2003-09-17,M,D005
-S077,Phan Văn Tuấn,s077@example.com,2003-02-08,M,D004
-S078,Đinh Văn Tuấn,s078@example.com,2004-04-20,M,D003
-S079,Phạm Thị Linh,s079@example.com,2002-07-26,F,D003
-S080,Phạm Thị Thu,s080@example.com,2003-09-02,F,D005
-S081,Bùi Thị Linh,s081@example.com,2001-01-03,F,D001
-S082,Đinh Văn Hải,s082@example.com,2004-05-24,M,D004
-S083,Trần Thị Huyền,s083@example.com,2004-01-21,F,D005
-S084,Nguyễn Văn Hải,s084@example.com,2001-01-05,M,D009
-S085,Đặng Văn Tuấn,s085@example.com,2000-09-04,M,D005
-S086,Lý Văn Sơn,s086@example.com,2002-06-15,M,D007
-S087,Phạm Thị Trang,s087@example.com,2003-07-08,F,D005
-S088,Đặng Văn Hải,s088@example.com,2001-09-29,M,D009
-S089,Phạm Thị Huyền,s089@example.com,2002-10-12,F,D004
-S090,Đặng Thị Trang,s090@example.com,2000-11-20,F,D006
-S091,Trần Văn Đức,s091@example.com,2000-03-24,M,D007
-S092,Trần Văn Khang,s092@example.com,2000-03-24,M,D001
-S093,Phạm Văn Minh,s093@example.com,2003-02-10,M,D009
-S094,Đỗ Thị Hương,s094@example.com,2001-05-20,F,D007
-S095,Bùi Thị Thảo,s095@example.com,2001-03-04,F,D001
-S096,Vũ Văn Đức,s096@example.com,2003-07-06,M,D005
-S097,Đặng Thị Nga,s097@example.com,2003-03-16,F,D002
-S098,Bùi Văn Sơn,s098@example.com,2003-04-09,M,D003
-S099,Nguyễn Văn Minh,s099@example.com,1999-12-16,M,D003
-S100,Lý Văn Quang,s100@example.com,2000-04-20,M,D008
+student_id,student_name,email,birthday,sex,department_id,birthplace,address,phone,ethnicity,religion,id_card,issue_date,issue_place
+S001,Nguyen Van A,a@example.com,2000-01-15,M,D001,Ha Noi,So 12 Duong Le Loi Quan 1,0905123456,Kinh,None,034512678,2016-03-15,Ha Noi
+S002,Tran Thi B,b@example.com,2001-05-20,F,D002,Da Nang,So 23 Duong Nguyen Trai Quan 3,0906789345,Kinh,Buddhism,123456789,2018-07-09,Da Nang
+S003,Le Van C,c@example.com,1999-07-30,M,D001,TP.HCM,So 45 Duong Hai Ba Trung Quan 5,0912345678,Kinh,None,236547891,2017-05-22,TP.HCM
+S004,Pham Thi D,d@example.com,2002-03-10,F,D005,Hai Phong,So 78 Duong Tran Phu Quan Hong Bang,0905123987,Kinh,Buddhism,983456721,2019-01-16,Hai Phong
+S005,Hoang Van E,e@example.com,2000-11-25,M,D003,Can Tho,So 56 Duong Cach Mang Quan Ninh Kieu,0905345678,Kinh,None,564738291,2016-10-03,Can Tho
+S006,Do Thi F,f@example.com,2003-08-01,F,D006,Ha Noi,So 89 Duong Ly Thuong Kiet Quan Hoan Kiem,0905123498,Kinh,Christianity,674839210,2017-12-18,Ha Noi
+S007,Phan Van G,g@example.com,1998-04-12,M,D007,Da Nang,So 22 Duong Phan Chu Trinh Quan Hai Chau,0908765432,Kinh,Buddhism,745612398,2018-03-09,Da Nang
+S008,Vu Thi H,h@example.com,2000-06-28,F,D002,TP.HCM,So 66 Duong Nguyen Van Cu Quan 5,0902456781,Kinh,None,834562791,2019-02-25,TP.HCM
+S009,Dinh Van I,i@example.com,2001-02-18,M,D004,Hai Phong,So 41 Duong Dinh Tien Hoang Quan Le Chan,0909654783,Kinh,Buddhism,945612783,2018-11-30,Hai Phong
+S010,Bui Thi K,k@example.com,1999-10-05,F,D008,Can Tho,So 17 Duong Xo Viet Nghe Tinh Quan Cai Rang,0903789123,Kinh,None,236478901,2017-04-19,Can Tho
+S011,Ngo Van L,l@example.com,2002-12-03,M,D009,Ha Noi,So 88 Duong Tran Hung Dao Quan Hoan Kiem,0905123894,Kinh,Buddhism,561239847,2016-09-14,Ha Noi
+S012,Ly Thi M,m@example.com,2003-01-22,F,D010,Da Nang,So 77 Duong Nguyen Hue Quan Hai Chau,0909348756,Kinh,None,789456123,2018-10-11,Da Nang
+S013,Trinh Van N,n@example.com,1998-09-17,M,D001,TP.HCM,So 35 Duong Le Lai Quan 1,0902789134,Kinh,Christianity,891234567,2019-08-21,TP.HCM
+S014,Chau Thi P,p@example.com,2000-07-09,F,D005,Hai Phong,So 64 Duong Le Loi Quan Hong Bang,0905348712,Kinh,Buddhism,459123678,2016-12-09,Hai Phong
+S015,Duong Va ,q@example.com,2001-03-07,M,D003,Can Tho,So 50 Duong Nguyen Trai Quan Ninh Kieu,0908745126,Kinh,None,781239456,2018-05-15,Can Tho
+S016,Dao Thi R,r@example.com,2002-05-14,F,D006,Ha Noi,So 22 Duong Hang Bong Quan Hoan Kiem,0906152398,Kinh,Buddhism,562348971,2019-06-24,Ha Noi
+S017,Dang Van S,s@example.com,1999-11-01,M,D007,Da Nang,So 47 Duong Le Duan Quan Thanh Khe,0909312478,Kinh,None,678934512,2017-09-12,Da Nang
+S018,Ho Thi T,t@example.com,2000-04-24,F,D004,TP.HCM,So 98 Duong Dien Bien Phu Quan 3,0903156789,Kinh,Buddhism,236489157,2016-02-19,TP.HCM
+S019,Lam Van U,u@example.com,2003-06-19,M,D009,Hai Phong,So 33 Duong Phan Boi Chau Quan Le Chan,0905674321,Kinh,None,978654123,2019-05-10,Hai Phong
+S020,Mai Thi V,v@example.com,2001-09-11,F,D002,Can Tho,So 20 Duong 3/2 Quan Ninh Kieu,0909783456,Kinh,Buddhism,345612879,2018-08-29,Can Tho
+S021,Nguyen Van W,w@example.com,2002-04-10,M,D008,Ha Noi,So 21 Duong Giang Vo Quan Dong Da,0905623789,Kinh,Buddhism,765489132,2018-07-25,Ha Noi
+S022,Tran Thi X,x@example.com,2003-07-22,F,D003,Da Nang,So 19 Duong Nguyen Van Linh Quan Hai Chau,0909482317,Kinh,None,234785619,2017-10-03,Da Nang
+S023,Le Van Y,y@example.com,2001-11-05,M,D001,TP.HCM,So 55 Duong Cach Mang Thang 8 Quan 10,0903189274,Kinh,Buddhism,981234765,2019-09-19,TP.HCM
+S024,Pham Thi Z,z@example.com,2000-02-18,F,D010,Hai Phong,So 43 Duong Tran Nguyen Han Quan Ng Quyen,0909187456,Kinh,None,673498152,2018-11-01,Hai Phong
+S025,Hoang Van AA,aa@example.com,2002-09-30,M,D005,Can Tho,So 10 Duong Nguyen Viet Hong Quan Ninh Kieu,0903478591,Kinh,Buddhism,542678391,2017-02-16,Can Tho
+S026,Do Thi BB,bb@example.com,2003-01-14,F,D004,Ha Noi,So 61 Duong Hai Ba Trung Quan Hoan Kiem,0905678912,Kinh,Christianity,235678941,2016-06-04,Ha Noi
+S027,Phan Van CC,cc@example.com,1999-08-08,M,D007,Da Nang,So 87 Duong Ong Ich Khiem Quan Hai Chau,0904789312,Kinh,Buddhism,189234657,2019-12-23,Da Nang
+S028,Vu Thi DD,dd@example.com,2001-06-12,F,D006,TP.HCM,So 12 Duong Hoang Dieu Quan 4,0902349817,Kinh,None,378954621,2017-05-28,TP.HCM
+S029,Dinh Van EE,ee@example.com,2000-10-25,M,D002,Hai Phong,So 76 Duong Le Lai Quan Hong Bang,0905643897,Kinh,Buddhism,945621873,2018-03-17,Hai Phong
+S030,Bui Thi FF,ff@example.com,2002-03-29,F,D009,Can Tho,So 80 Duong 30/4 Quan Ninh Kieu,0909812354,Kinh,None,567213984,2019-06-06,Can Tho
+S031,Ngo Van GG,gg@example.com,2003-05-01,M,D001,Ha Noi,So 17 Duong Ba Trieu Quan Hoan Kiem,0908124567,Kinh,Buddhism,892316475,2017-09-09,Ha Noi
+S032,Ly Thi HH,hh@example.com,1998-12-15,F,D003,Da Nang,So 99 Duong Hoang Hoa Tham Quan Thanh Khe,0906782314,Kinh,None,567891234,2018-01-23,Da Nang
+S033,Trinh Van II,ii@example.com,2001-04-20,M,D010,TP.HCM,So 48 Duong Pham Ngu Lao Quan 1,0903178456,Kinh,Buddhism,982134657,2016-04-14,TP.HCM
+S034,Chau Thi KK,kk@example.com,2000-08-11,F,D008,Hai Phong,So 59 Duong Tran Hung Dao Quan Ng Quyen,0902135489,Kinh,None,673291845,2019-10-20,Hai Phong
+S035,Duong Van LL,ll@example.com,2003-02-23,M,D005,Can Tho,So 13 Duong Ly Thai To Quan Ninh Kieu,0907543126,Kinh,Buddhism,452198367,2018-09-07,Can Tho
+S036,Dao Thi MM,mm@example.com,2002-07-07,F,D007,Ha Noi,So 41 Duong Nguyen Du Quan Hai Ba Trung,0909876123,Kinh,None,356789412,2017-05-03,Ha Noi
+S037,Dang Van NN,nn@example.com,1999-03-16,M,D004,Da Nang,So 32 Duon Quang Trung Quan Thanh Khe,0903487216,Kinh,Buddhism,981237564,2018-07-28,Da Nang
+S038,Ho Thi OO,oo@example.com,2000-09-02,F,D006,TP.HCM,So 83 Duong Le Hong Phong Quan 10,0906432187,Kinh,None,783245619,2016-08-17,TP.HCM
+S039,Lam Van PP,pp@example.com,2001-12-28,M,D002,Hai Phong,So 29 Duong Nguyen Trai Quan Le Chan,0907192834,Kinh,Buddhism,564738192,2017-11-11,Hai Phong
+S040,Mai ThQqq@example.com,s040@example.com,2003-10-19,F,D001,Can Tho,So 63 Duong Hoa Binh Quan Ninh Kieu,0902387641,Kinh,None,392874561,2019-03-29,Can Tho
+S041,Đặng Văn Khang,s041@example.com,2002-05-11,M,D007,Ha Noi,So 25 Duong Kim Ma Quan Ba Dinh,0908754321,Kinh,Buddhism,128934657,2017-09-12,Ha Noi
+S042,Lê Thị Trang,s042@example.com,2002-05-27,F,D003,Da Nang,So 76 Duong Nguyen Huu Tho Quan Cam Le,0906421789,Kinh,None,345781296,2018-02-10,Da Nang
+S043,Hoàng Văn Đức,s043@example.com,2001-03-23,M,D003,TP.HCM,So 33 Duong Nguyen Trai Quan 5,0909123478,Kinh,Buddhism,789341256,2016-11-07,TP.HCM
+S044,Phạm Văn Sơn,s044@example.com,2002-07-08,M,D001,Hai Phong,So 47 Duong Tran Phu Quan Ng Quyen,0903981276,Kinh,None,564219873,2019-04-15,Hai Phong
+S045,Vũ Thị Phương,s045@example.com,2001-03-01,F,D001,Can Tho,So 12 Duong Nguyen Van Cu Quan Ninh Kieu,0907812459,Kinh,Buddhism,328945617,2018-08-22,Can Tho
+S046,Đinh Văn Bảo,s046@example.com,2004-11-20,M,D008,Ha Noi,So 35 Duong Giai Phong Quan Hoang Mai,0906429187,Kinh,Christianity,487216935,2019-01-13,Ha Noi
+S047,Bùi Thị Nga,s047@example.com,2001-02-02,F,D006,Da Nang,So 28 Duong Le Duan Quan Hai Chau,0909187342,Kinh,Buddhism,192384756,2016-05-27,Da Nang
+S048,Lý Thị Hương,s048@example.com,2003-07-28,F,D001,TP.HCM,So 59 Duong Pasteur Quan 3,0907312984,Kinh,None,563219847,2018-06-19,TP.HCM
+S049,Bùi Thị Hà,s049@example.com,2000-11-20,F,D002,Hai Phong,So 40 Duong Dien Bien Phu Quan Hong Bang,0908721345,Kinh,Buddhism,784519236,2017-10-02,Hai Phong
+S050,Lý Văn Tuấn,s050@example.com,2000-08-14,M,D008,Can Tho,So 84 Duong Tran Van Hoai Quan Ninh Kieu,0902481739,Kinh,None,681279543,2018-09-29,Can Tho
+S051,Phan Thị Thu,s051@example.com,2004-10-02,F,D002,Ha Noi,So 18 Duong Lang Ha Quan Dong Da,0909387124,Kinh,Buddhism,982314675,2019-07-23,Ha Noi
+S052,Đỗ Văn Việt,s052@example.com,2003-07-23,M,D009,Da Nang,So 92 Duong 2 Thang 9 Quan Hai Chau,0905432891,Kinh,None,321987465,2017-05-18,Da Nang
+S053,Đặng Thị Thảo,s053@example.com,2003-12-26,F,D010,TP.HCM,So 25 Duong Nguyen Thi Minh Khai Quan 1,0908123945,Kinh,Buddhism,764893215,2016-12-09,TP.HCM
+S054,Lý Thị Ngọc,s054@example.com,2000-11-22,F,D004,Hai Phong,So 36 Duong Tran Nguyen Han Quan Le Chan,0906481732,Kinh,None,932871456,2018-11-04,Hai Phong
+S055,Đỗ Văn Long,s055@example.com,2002-05-18,M,D006,Can Tho,So 23 Duong Cach Mang Thang 8 Quan Ninh Kieu,0904812367,Kinh,Buddhism,456213789,2019-03-22,Can Tho
+S056,Hoàng Văn Khang,s056@example.com,1999-01-22,M,D003,Ha Noi,So 67 Duong Tay Son Quan Dong Da,0909138472,Kinh,None,213784569,2017-08-18,Ha Noi
+S057,Vũ Văn Bảo,s057@example.com,2003-09-02,M,D003,Da Nang,So 91 Duong Tran Phu Quan Hai Chau,0908213645,Kinh,Buddhism,875231649,2016-04-29,Da Nang
+S058,Lý Văn Đức,s058@example.com,2002-12-29,M,D004,TP.HCM,So 42 Duong Ly Tu Trong Quan 1,0907123986,Kinh,None,984621357,2019-06-17,TP.HCM
+S059,Phan Văn Long,s059@example.com,2002-10-09,M,D010,Hai Phong,So 31 Duong Nguyen Van Linh Quan Le Chan,0908912743,Kinh,Buddhism,178952364,2017-01-20,Hai Phong
+S060,Phan Thị Huyền,s060@example.com,2001-08-05,F,D009,Can Tho,So 22 Duong Hoa Binh Quan Ninh Kieu,0905178932,Kinh,None,563982741,2018-10-10,Can Tho
+S061,Đinh Văn Hậu,s061@example.com,2001-04-12,M,D007,Ha Noi,So 72 Duong Nguyen Chi Thanh Quan Dong Da,0904321987,Kinh,Buddhism,892314657,2017-05-14,Ha Noi
+S062,Lưu Thị Hoa,s062@example.com,2002-09-17,F,D005,Da Nang,So 83 Duong Le Loi Quan Hai Chau,0909213867,Kinh,None,324789516,2018-01-22,Da Nang
+S063,Nguyễn Văn Minh,s063@example.com,2003-06-21,M,D005,TP.HCM,So 46 Duong Nguyen Hue Quan 1,0908451793,Kinh,Buddhism,657912384,2016-09-09,TP.HCM
+S064,Trần Thị Yến,s064@example.com,2000-10-14,F,D001,Hai Phong,So 19 Duong Lach Tray Quan Ng Quyen,0909781245,Kinh,None,981273456,2018-02-12,Hai Phong
+S065,Lê Văn Hòa,s065@example.com,2001-12-09,M,D002,Can Tho,So 23 Duong 30 Thang 4 Quan Ninh Kieu,0907681329,Kinh,Buddhism,473829165,2017-12-19,Can Tho
+S066,Hoàng Thị Diễm,s066@example.com,2003-08-02,F,D002,Ha Noi,So 50 Duong Kim Ma Quan Ba Dinh,0906481372,Kinh,None,512987634,2019-03-04,Ha Noi
+S067,Đặng Văn Hùng,s067@example.com,2002-03-03,M,D006,Da Nang,So 74 Duong Nguyen Huu Tho Quan Cam Le,0909451768,Kinh,Buddhism,982371456,2018-09-10,Da Nang
+S068,Phan Thị Mai,s068@example.com,2003-07-07,F,D003,TP.HCM,So 31 Duong Cach Mang Thang 8 Quan 10,0907319846,Kinh,None,718945632,2017-07-22,TP.HCM
+S069,Bùi Văn Tài,s069@example.com,2002-06-09,M,D009,Hai Phong,So 68 Duong Tran Nhat Duat Quan Hong Bang,0908642391,Kinh,Buddhism,648913275,2016-03-30,Hai Phong
+S070,Vũ Th Quỳnh,s070@example.com,2001-07-23,F,D010,Can Tho,So 17 Duong Nguyen Thai Hoc Quan Ninh Kieu,0909371845,Kinh,None,498217365,2019-11-06,Can Tho
+S071,Nguyễn Văn Phước,s071@example.com,2004-01-10,M,D004,Ha Noi,So 62 Duong Lang Quan Dong Da,0905129483,Kinh,Buddhism,823971465,2018-05-20,Ha Noi
+S072,Đỗ Thị Bích,s072@example.com,2003-02-28,F,D003,Da Nang,So 43 Duong Phan Chau Trinh Quan Hai Chau,0908213648,Kinh,None,918273465,2017-09-08,Da Nang
+S073,Hoàng Văn Khôi,s073@example.com,2000-09-19,M,D001,TP.HCM,So 24 Duong Le Thanh Ton Quan 1,0907349821,Kinh,Buddhism,264781935,2019-02-14,TP.HCM
+S074,Đặng Thị Nhung,s074@example.com,2002-12-23,F,D002,Hai Phong,So 59 Duong Dinh Tien Hoang Quan Hong Bang,0909348712,Kinh,None,472316589,2016-06-11,Hai Phong
+S075,Bùi Văn Phong,s075@example.com,2001-08-06,M,D007,Can Tho,So 28 Duong Nguyen Van Cu Quan Ninh Kieu,0907631829,Kinh,Buddhism,715839246,2017-01-19,Can Tho
+S076,Lý Thị Cẩm,s076@example.com,2000-05-08,F,D008,Ha Noi,So 12 Duong Kim Lien Quan Dong Da,0909124783,Kinh,None,694321785,2018-04-25,Ha Noi
+S077,Phan Văn Tiến,s077@example.com,2002-02-17,M,D009,Da Nang,So 49 Duong Hoang Dieu Quan Hai Chau,0908321975,Kinh,Buddhism,815493276,2019-10-01,Da Nang
+S078,Lê Thị Vân,s078@example.com,2003-11-03,F,D010,TP.HCM,So 72 Duong Tran Hung Dao Quan 5,0907139458,Kinh,None,924871356,2017-08-09,TP.HCM
+S079,Trần Văn Bình,s079@example.com,2001-10-05,M,D005,Hai Phong,So 30 Duong To Hieu Quan Le Chan,0908412736,Kinh,Buddhism,384729561,2018-07-11,Hai Phong
+S080,Nguyễn Thị Hiền,s080@example.com,2004-09-16,F,D006,Can Tho,So 53 Duong Nguyen Van Cu Quan Ninh Kieu,0905148739,Kinh,None,578942613,2019-09-27,Can Tho
+S081,Phạm Văn Đức,s081@example.com,2002-02-15,M,D001,Ha Noi,So 14 Duong Ho Tung Mau Quan Cau Giay,0908741239,Kinh,Buddhism,894512376,2018-06-18,Ha Noi
+S082,Nguyễn Thị Liên,s082@example.com,2003-05-21,F,D002,Da Nang,So 33 Duong Nguyen Van Linh Quan Hai Chau,0909418372,Kinh,None,782319456,2019-02-08,Da Nang
+S083,Lâm Văn Long,s083@example.com,2001-09-10,M,D003,TP.HCM,So 11 Duong Ba Trieu Quan 1,0906178423,Kinh,Buddhism,564872913,2017-03-19,TP.HCM
+S084,Vũ Thị Hà,s084@example.com,2004-06-27,F,D004,Hai Phong,So 21 Duong Tran Phu Quan Ng Quyen,0905347826,Kinh,None,918374652,2018-01-30,Hai Phong
+S085,Hoàng Văn Trung,s085@example.com,2000-10-19,M,D005,Can Tho,So 45 Duong Mau Than Quan Ninh Kieu,0909438715,Kinh,Buddhism,463817925,2016-10-12,Can Tho
+S086,Lê Thị Hồng,s086@example.com,2002-08-25,F,D006,Ha Noi,So 53 Duong De La Thanh Quan Dong Da,0908472916,Kinh,None,281937564,2017-05-09,Ha Noi
+S087,Nguyễn Văn Lợi,s087@example.com,2003-07-12,M,D007,Da Nang,So 29 Duong Nguyen Tri Phuong Quan Thanh Khe,0905129374,Kinh,Buddhism,763182945,2018-09-15,Da Nang
+S088,Trần Thị Mỹ,s088@example.com,2001-11-28,F,D008,TP.HCM,So 31 Duong Pham Ngu Lao Quan 1,0909738412,Kinh,None,984173625,2017-12-21,TP.HCM
+S089,Bùi Văn Toàn,s089@example.com,2000-12-11,M,D009,Hai Phong,So 28 Duong Lach Tray Quan Ng Quyen,0906129378,Kinh,Buddhism,481729563,2016-08-02,Hai Phong
+S090,Ngô Thị Kim,s090@example.com,2004-04-23,F,D010,Can Tho,So 62 Duong Nguyen Trai Quan Ninh Kieu,0909538142,Kinh,None,874913562,2019-05-12,Can Tho
+S091,Phan Văn Hải,s091@example.com,2003-02-09,M,D001,Ha Noi,So 37 Duong Xuan Thuy Quan Cau Giay,0908231976,Kinh,Buddhism,936471825,2017-11-05,Ha Noi
+S092,Lương Thị Hoa,s092@example.com,2001-10-06,F,D002,Da Nang,So 55 Duong Ong Ich Khiem Quan Hai Chau,0907512948,Kinh,None,673892415,2018-03-21,Da Nang
+S093,Đinh Văn Cường,s093@example.com,2000-09-25,M,D003,TP.HCM,So 10 Duong Le Loi Quan 1,0908127349,Kinh,Buddhism,583921476,2016-02-26,TP.HCM
+S094,Phạm Thị Thảo,s094@example.com,2002-01-17,F,D004,Hai Phong,So 17 Duong To Hieu Quan Le Chan,0909841735,Kinh,None,794613825,2018-12-07,Hai Phong
+S095,Nguyễn Văn Hòa,s095@example.com,2003-03-29,M,D005,Can Tho,So 63 Duong 30 Thang 4 Quan Ninh Kieu,0905412983,Kinh,Buddhism,692718534,2017-06-20,Can Tho
+S096,Đoàn Thị Mai,s096@example.com,2001-05-05,F,D006,Ha Noi,So 40 Duong Giang Vo Quan Ba Dinh,0908721935,Kinh,None,871296435,2019-04-16,Ha Noi
+S097,Hoàng Văn Nam,s097@example.com,2000-07-03,M,D007,Da Nang,So 44 Duong Le Duan Quan Thanh Khe,0907129836,Kinh,Buddhism,684192357,2016-11-22,Da Nang
+S098,Trịnh Thị Trang,s098@example.com,2002-11-15,F,D008,TP.HCM,So 20 Duong Nguyen Van Cu Quan 5,0909318274,Kinh,None,916482735,2018-08-13,TP.HCM
+S099,Phan Văn Kiệt,s099@example.com,2004-09-02,M,D009,Hai Phong,So 35 Duong Dinh Tien Hoang Quan Hong Bang,0907819465,Kinh,Buddhism,835741296,2019-10-04,Hai Phong
+S100,Lê Thị Bích,s100@example.com,2003-08-18,F,D010,Can Tho,So 15 Duong Tran Hung Dao Quan Ninh Kieu,0905428193,Kinh,None,942871356,2018-07-19,Can Tho
+

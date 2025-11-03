@@ -35,13 +35,21 @@ def seed_data_from_csv(db):
                 if pd.isna(row.get("student_id")):
                     continue
                 student = StudentModel(
-                    student_id=row.get("student_id"),
-                    student_name=row.get("student_name"),
+                    student_id=row.get("student_id", ""),
+                    student_name=row.get("student_name", ""),
                     birthday=parse_date(row.get("birthday", "")),
-                    email=row.get("email"),
+                    age= compute_age(parse_date(row.get("birthday", ""))),
+                    email=row.get("email", ""),
                     sex=row.get('sex', ''),
-                    age = compute_age(parse_date(row.get("birthday", ""))),
-                    department_id = row.get("department_id")
+                    department_id = row.get("department_id", ""),
+                    birthplace=row.get("birthplace", ""),
+                    address=row.get("address", ""),
+                    phone=row.get("phone", ""),
+                    ethnicity=row.get("ethnicity", ""),
+                    religion=row.get("religion", ""),
+                    id_card=row.get("id_card", ""),
+                    issue_date=parse_date(row.get("issue_date", "")),
+                    issue_place=row.get("issue_place", "")
                 )
                 db.merge(student)
                 

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, UploadFile
 from src.presentation.api.dependencies import get_student_service
 from src.application.services.student import *
 from src.application.dtos.student_dto import *
@@ -39,7 +39,7 @@ def update_student(request: UploadStudentRequest,service: StudentManagement = De
 @router.get("/student", response_model=StudentResponse)
 def get_student_by_id(student_id: str, service: StudentManagement = Depends(get_student_service)):
     try:    
-        student_out = service.view(student_id)
+        student_out = service.get_by_id(student_id)
         return student_out
     except AppError as e:
         raise to_http_exception(getattr(e, "code", "INTERNAL_ERROR"), str(e))
@@ -50,16 +50,12 @@ def get_student_by_id(student_id: str, service: StudentManagement = Depends(get_
 @router.get("/student/column")
 def get_columns():
     PATH = PROJECT_ROOT / "src/utils/patterns/detail_student.json"
-    # 1. Kiểm tra xem file có tồn tại không
     if not PATH.is_file():
         raise HTTPException(status_code=404, detail=f"Configuration file not found.")
     
     try:
         with open(PATH, mode='r',encoding="utf-8") as f:
             data = json.load(f)
-        
-        # 2. Kiểm tra xem dữ liệu có rỗng không (tùy chọn)
-        # Dù list rỗng là hợp lệ, bạn có thể muốn log một cảnh báo
         if not data:
             print(f"Warning: Configuration file at {PATH} is empty.")
         
@@ -99,10 +95,32 @@ def get_list_student(req: StudentDetailRequest,service: StudentManagement = Depe
 def delete_student_endpoint(student_id: str, service: StudentManagement = Depends(get_student_service)):
     try:
         # Gọi service để thực hiện nghiệp vụ xóa
-        deleted_student = service.delete_student(student_id)
+        deleted_student = service.delete(student_id)
         return deleted_student
     except ValidationError as e:
         # Lỗi validation từ Service
+        raise HTTPException(status_code=400, detail=e.detail)
+    except Exception as e:
+        # Bắt các lỗi không mong muốn khác
+        print("❌ Lỗi không xác định ❌")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Lỗi server không xác định: {e}")
+    
+@router.post("/student/import_file", response_model=ListStudentFileResponse)
+async def import_students_from_docx(files: List[UploadFile], service: StudentManagement = Depends(get_student_service)):
+    PATH = PROJECT_ROOT / "src/utils/patterns/docx.json"
+    if not PATH.is_file():
+        raise HTTPException(status_code=404, detail=f"Configuration file not found.")
+    
+    try:
+        with open(PATH, mode='r',encoding="utf-8") as f:
+            data = json.load(f)
+            
+        saved_entities = await service.import_students_from_docx(pattern=data, files=files)
+        return saved_entities
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Error decoding configuration file.")  
+    except ValidationError as e:
         raise HTTPException(status_code=400, detail=e.detail)
     except Exception as e:
         # Bắt các lỗi không mong muốn khác

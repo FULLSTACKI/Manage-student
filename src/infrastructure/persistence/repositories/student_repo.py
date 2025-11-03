@@ -1,34 +1,21 @@
-from sqlalchemy.orm import Session
-from sqlalchemy.exc import IntegrityError
+from src.infrastructure.persistence.models import StudentModel, CourseModel, DepartmentModel, RegistrationModel
+from src.domain.entities import Student
+from src.application.dtos import studentOut
 from src.domain.repositories import IsStudentRepo
-from src.infrastructure.persistence.models import StudentModel, DepartmentModel, CourseModel, RegistrationModel
-from src.domain.entities import Student, StudentDetail
 from src.infrastructure.persistence.mappers import StudentMapper
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 from typing import List
 
 class StudentRepo(IsStudentRepo):
     def __init__(self, db_session: Session):
         self.db_session = db_session
         
-    def get_by_id(self, student_id:str) -> StudentDetail:
+    def get_by_id(self, student_id:str) -> studentOut:
         try:
-            stmt = (
-                select(
-                    StudentModel.student_id,
-                    StudentModel.student_name,
-                    StudentModel.email,
-                    StudentModel.age,
-                    StudentModel.birthday,
-                    StudentModel.sex,
-                    DepartmentModel.department_name
-                )
-                .select_from(StudentModel)
-                .join(DepartmentModel, DepartmentModel.department_id == StudentModel.department_id)
-                .filter(StudentModel.student_id == student_id)
-            )
-            result = self.db_session.execute(stmt).mappings().first()
-            return StudentDetail(**result)
+            result = self.db_session.query(StudentModel).filter(StudentModel.student_id == student_id).first()
+            return StudentMapper.to_detail(result)
         except IntegrityError as e: 
             raise e
         except Exception as e:
@@ -53,22 +40,30 @@ class StudentRepo(IsStudentRepo):
 
             data_row = self.db_session.execute(stmt).mappings().all()
 
-            return [StudentDetail(
+            return [studentOut(
                 student_id=data.get("student_id"),
                 student_name=data.get("student_name"),
                 email=data.get("email"),
-                age=data.get("age"),
-                birthday=data.get("birthday"),
+                age=f"{data.get("age")}",
+                birthday=f"{data.get("birthday")}",
                 sex=data.get("sex"),
-                department_name=data.get("department_name"),
-                course_name=data.get("course_name")
+                departments=data.get("department_name"),
+                courses=data.get("course_name"),
+                birthplace=data.get("birthplace"),
+                address=data.get("address"),
+                phone=data.get("phone"),
+                ethnicity=data.get("ethnicity"),
+                religion=data.get("religion"),
+                id_card=data.get("id_card"),
+                issue_date=f"{data.get("issue_date")}",
+                issue_place=data.get("issue_place")
             ) for data in data_row]
         except Exception as e:
             raise e 
         except IntegrityError as e:
             raise e
     
-    def save(self, req_student: Student) -> StudentDetail:
+    def save(self, req_student: Student) -> studentOut:
         existing = self.db_session.query(StudentModel).filter(StudentModel.student_id == req_student.student_id).first()
         try:
             if not existing:
@@ -76,16 +71,20 @@ class StudentRepo(IsStudentRepo):
                 persistent = self.db_session.merge(save_student)
                 self.db_session.commit()
                 self.db_session.refresh(persistent)
-                result = self.get_by_id(req_student.student_id)
-                return result 
+                _ = persistent.department
+                return StudentMapper.to_detail(persistent)
         except IntegrityError as e:
             self.db_session.rollback()
-            raise e
+            error_info = str(e.orig)
+            if "UNIQUE constraint failed: students.id_card" in error_info:
+                raise ValueError(f"CCCD đã tồn tại: {req_student.id_card}")
+            else:
+                raise e
         except Exception as e:
             self.db_session.rollback()
             raise e 
     
-    def update(self, req: Student) -> StudentDetail:
+    def update(self, req: Student) -> studentOut:
         existing = self.db_session.query(StudentModel).filter(StudentModel.student_id == req.student_id).first()
         try:
             if existing:
@@ -95,43 +94,33 @@ class StudentRepo(IsStudentRepo):
                 existing.age = req.age
                 existing.sex = req.sex 
                 existing.department_id = req.department_id
-                update_student = existing
-            persistent = self.db_session.merge(update_student)
+                existing.birthplace = req.birthplace
+                existing.address = req.address
+                existing.phone = req.phone
+                existing.ethnicity = req.ethnicity
+                existing.religion = req.religion
+                existing.id_card = req.id_card
+                existing.issue_date = req.issue_date
+                existing.issue_place = req.issue_place
             self.db_session.commit()
-            self.db_session.refresh(persistent)
-            result = self.get_by_id(req.student_id)
-            return result
+            self.db_session.refresh(existing)
+            return StudentMapper.to_detail(existing)
         except IntegrityError as e:
             self.db_session.rollback()
-            raise e
+            error_info = str(e.orig)
+            if "UNIQUE constraint failed: students.id_card" in error_info:
+                raise ValueError(f"CCCD đã tồn tại: {req.id_card}")
+            else:
+                raise e
         except Exception as e:
             self.db_session.rollback()
             raise e 
 
-    def deleted(self, student_id: str) -> StudentDetail:
+    def deleted(self, student_id: str) -> studentOut:
         try:
-            stmt = (
-                select(
-                    StudentModel,
-                    DepartmentModel.department_name
-                )
-                .select_from(StudentModel)
-                .join(DepartmentModel, DepartmentModel.department_id == StudentModel.department_id)
-                .filter(StudentModel.student_id == student_id)
-            )
-            result_row = self.db_session.execute(stmt).first()
-            student_model_to_delete = result_row[0]
-            department_name = result_row[1]
-            deleted_student_detail = StudentDetail(
-                student_id=student_model_to_delete.student_id,
-                student_name=student_model_to_delete.student_name,
-                email=student_model_to_delete.email,
-                age=student_model_to_delete.age,
-                birthday=student_model_to_delete.birthday,
-                sex=student_model_to_delete.sex,
-                department_name=department_name
-            )
-            self.db_session.delete(student_model_to_delete)
+            result = self.db_session.query(StudentModel).filter(StudentModel.student_id == student_id).first()
+            deleted_student_detail = StudentMapper.to_detail(result)
+            self.db_session.delete(result)
             self.db_session.commit()
             return deleted_student_detail
         except IntegrityError as e: 

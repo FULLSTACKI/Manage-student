@@ -6,3 +6,4 @@ from .dtos import *
 from .registration import Registration
 from .teacher import Teacher
 from .classroom import Classroom
+from .cover_letter import CoverLetterProcessor

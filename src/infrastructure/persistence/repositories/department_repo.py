@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 from src.infrastructure.persistence.models import DepartmentModel
 from src.domain.repositories import IsDepartmentRepo
-from src.domain.entities import Department, Option
+from src.domain.entities import Department
+from src.application.dtos import Option
 from sqlalchemy.exc import IntegrityError
 from typing import *
 from sqlalchemy import text

@@ -1,0 +1,13 @@
+{
+    "student_name": "Họ và tên: (.*?)\\s+Nam/Nữ",
+    "sex": "Nam/Nữ: (.*?)$",
+    "birthday": "Sinh ngày: (.*?)\\s+Nơi sinh",
+    "birthplace": "Nơi sinh: (.*?)$",
+    "address": "Chỗ ở hiện nay: (.*?)$",
+    "phone": "Điện thoại liên hệ: (.*?)$",
+    "ethnicity": "Dân tộc: (.*?)\\s+Tôn giáo",
+    "religion": "Tôn giáo: (.*?)$",
+    "id_card": "Số CCCD/CMND: (.*?)\\s+Cấp ngày",
+    "issue_date": "Cấp ngày: (.*?)\\s+Nơi cấp",
+    "issue_place": "Nơi cấp: (.*?)$"
+}

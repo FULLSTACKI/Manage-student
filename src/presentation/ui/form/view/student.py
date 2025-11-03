@@ -3,12 +3,16 @@ import requests
 from src.presentation.ui import api_base
 from ..update.student import update_student
 from src.presentation.ui.components import deleted
+import time     
 
 def view_student():
-    st.subheader("Danh sách Sinh viên")
+    st.subheader("📊 Thông tin Sinh viên")
     with st.form("view_form", clear_on_submit=True):
-        student_id = st.text_input("Tìm kiếm theo mã số Sinh viên:")
-        submit = st.form_submit_button("Tìm kiếm")
+        col_search1, col_search2 = st.columns([3,1])
+        with col_search1:
+            student_id = st.text_input("Tìm kiếm theo mã số Sinh viên:")
+        with col_search2.container(vertical_alignment='center', height='stretch', horizontal_alignment='center'):
+            submit = st.form_submit_button("🔍")
     
     if submit:
         if not student_id:
@@ -42,23 +46,43 @@ def view_student():
                 st.error(f"Failed to connect to API: {e}")
 
     if st.session_state.get("search_student") is not None:
-        st.markdown("---")
-        st.subheader("📊 Thông tin Sinh viên")
         student_info = st.session_state.get("search_student")
         student = student_info.get("student", {})
         with st.container(border=True,horizontal_alignment="center", vertical_alignment="center", height="stretch"):
-            st.markdown(f"### 🧑‍🎓 **{student.get('student_name', 'N/A')}**") 
-            st.write(f"**ID:** {student.get('student_id', 'N/A')} | **Khoa:** {student.get('departments', 'N/A')}")
-            st.write("")
-            sub_col1, sub_col2 = st.columns(2)
-            with sub_col1:
-                st.metric("🎂 Tuổi", student.get('age', 'N/A'))
-            with sub_col2:
+            # --- Dòng 1: Tên, ID, Khoa ---
+            st.markdown(f"### 🧑‍🎓 **{student.get('student_name', 'N/A')}**")
+            st.caption(f"**ID:** {student.get('student_id', 'N/A')} | **Khoa:** {student.get('departments', 'N/A')}")
+            
+            st.divider()
+
+            # --- Dòng 2: Thông tin cá nhân (chia 2 cột) ---
+            col1, col2 = st.columns(2)
+            with col1:
                 st.markdown(f"**🚻 Giới tính:** {student.get('sex', 'N/A')}")
-            st.write("**Thông tin liên lạc:**")
-            st.caption(f"""
-                📧 **Email:** {student.get('email', 'N/A')} | 🎂 **Ngày sinh:** {student.get('birthday', 'N/A')}
-            """)
+                st.markdown(f"**🎂 Tuổi:** {student.get('age', 'N/A')}") # Thay thế st.metric
+                st.markdown(f"**🗓️ Ngày sinh:** {student.get('birthday', 'N/A')}")
+                st.markdown(f"**🌍 Nơi sinh:** {student.get('birthplace', 'N/A')}")
+            with col2:
+                st.markdown(f"**👥 Dân tộc:** {student.get('ethnicity', 'N/A')}")
+                st.markdown(f"**🧘 Tôn giáo:** {student.get('religion', 'N/A')}")
+                st.markdown(f"**📱 Điện thoại:** {student.get('phone', 'N/A')}")
+                st.markdown(f"**📧 Email:** {student.get('email', 'N/A')}")
+
+            # --- Dòng 3: Địa chỉ ---
+            st.markdown(f"**🏠 Địa chỉ:** {student.get('address', 'N/A')}")
+
+            st.divider() # Ngăn cách
+
+            # --- Dòng 4: Thông tin CCCD (chia 2 cột) ---
+            col3, col4 = st.columns(2)
+            with col3:
+                st.markdown(f"**💳 CCCD:** `{student.get('id_card', 'N/A')}`")
+            with col4:
+                st.markdown(f"**Ngày cấp:** {student.get('issue_date', 'N/A')}")
+            
+            # Nơi cấp cho xuống caption để tiết kiệm không gian
+            st.caption(f"**Nơi cấp:** {student.get('issue_place', 'N/A')}")
+
             st.divider()
             button_col1, button_col2 = st.columns(2)
             with button_col2.container(width="stretch"):

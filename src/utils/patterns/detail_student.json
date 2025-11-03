@@ -26,6 +26,38 @@
             "label": "Giới tính"
         },
         {
+            "key": "birthplace",
+            "label": "Nơi sinh"
+        },
+        {
+            "key": "address",
+            "label": "Địa chỉ"
+        },
+        {
+            "key": "phone",
+            "label": "Điện thoại"
+        },
+        {
+            "key": "ethnicity",
+            "label": "Dân tộc"
+        },
+        {
+            "key": "religion",
+            "label": "Tôn giáo"
+        },
+        {
+            "key": "id_card",
+            "label": "CCCD/CMND"
+        },
+        {
+            "key": "issue_date",
+            "label": "Ngày cấp"
+        },
+        {
+            "key": "issue_place",
+            "label": "Nơi cấp"
+        },
+        {
             "key": "departments",
             "label": "Khoa"
         },

@@ -16,18 +16,18 @@ def manage_ui():
     
     tab_student, tab_course, tab_score = st.tabs(["🎓 Sinh viên", "📚 Khóa học", "📝 Điểm số"])
     
-    with tab_student.container(border=True):
-        column_s1, column_s2, column_s3 = st.columns([1, 1, 1])
+    with tab_student:
+        column_s1, column_s2, column_s3= st.columns([2, 2, 2])
         
-        with column_s1:
-            view_student()
-            success = st.session_state.pop("success_msg", None)
-            toast = st.session_state.pop("toast_msg", None)
+        with column_s2.container():
+            upload_student()
+            success = st.session_state.pop("upload_success_msg", None)
+            toast = st.session_state.pop("upload_toast_msg", None)
             if success and toast:
                 st.success(success)
                 st.toast(toast)
             
-        with column_s3: 
+        with column_s3.container(height=750, border=False): 
             st.subheader("📜 Lịch sử thay đổi")
 
             if not st.session_state.history:
@@ -55,15 +55,16 @@ def manage_ui():
                         with history_col2.container(height="stretch", vertical_alignment="center"):
                             if st.button("Chi tiết",type="tertiary",use_container_width=True, key=f"{action}_{data.get("student_id")}"):
                                 st.warning("Xem chi tiết...")
-                            
-        with column_s2:
-            upload_student()
-            success = st.session_state.pop("upload_success_msg", None)
-            toast = st.session_state.pop("upload_toast_msg", None)
+
+        with column_s1.container(border=False):
+            view_student()
+            success = st.session_state.pop("success_msg", None)
+            toast = st.session_state.pop("toast_msg", None)
             if success and toast:
                 st.success(success)
-                st.toast(toast)
-            
+                st.toast(toast)         
+                           
+        st.divider()
         with st.expander("Xem Danh sách thông tin Sinh viên", expanded=True):
             table_detail_student()
 

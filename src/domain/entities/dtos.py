@@ -28,21 +28,4 @@ class Chart:
     chart_type: str 
     data: List[AnalyticMetricDTO] | None
     column_x: str
-    column_y: str
-    
-@dataclass 
-class Option:
-    id:str
-    name:str
-    
-@dataclass
-class StudentDetail:
-    student_id: str
-    student_name: str
-    email: str
-    age: int
-    birthday: date
-    sex: str 
-    department_name: Optional[str] = None
-    course_name: Optional[str] = None
-    
+    column_y: str    

@@ -5,3 +5,5 @@ from .registration_model import RegistrationModel
 from .student_model import StudentModel
 from .classroom_model import ClassroomModel
 from .teacher_model import TeacherModel
+from .audit_model import AuditBaseModel
+from .student_history_model import StudentHistoryModel
