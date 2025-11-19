@@ -51,7 +51,6 @@ def get_current_user(
 ) -> Account:
     try:
         user = service.get_current_user(token)
-        print("Current user:", user)
         return user
     except ValidationError as e:
         raise HTTPException(
