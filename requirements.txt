@@ -33,3 +33,6 @@ openpyxl
 xlsxwriter
 aiofiles
 filetype
+
+#--- ID ---
+shortuuid
