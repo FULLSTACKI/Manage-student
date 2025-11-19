@@ -129,6 +129,9 @@ doAnCuoiKhoa/
    >Truy cập Web App: http://localhost:8501
 
 # 🎬 Kịch bản Demo: Tự động hóa Phân tích & Báo cáo Thông minh
+   Thưa thầy/cô, trong quản lý sinh viên truyền thống, việc tạo ra một báo cáo tổng hợp thường mất nhiều thời gian: Người quản lý phải truy vấn DB, copy sang Excel để vẽ biểu đồ, rồi tự nhìn số liệu để viết nhận xét. Quy trình này rời rạc và tốn kém nhân lực.
+
+   >👉 Giải pháp: "Hệ thống của em tích hợp quy trình Orchestration Workflow, cho phép tạo báo cáo trọn gói chỉ với 1 cú click, kết hợp sức mạnh của Generative AI."
 
    ## 🟢 Bước 1: Cấu hình Báo cáo (Input Configuration)
    **Hành động:** Mở trang Analytics trên giao diện Streamlit.
