@@ -1,17 +1,16 @@
 import pandas as pd
-from pathlib import Path
 from sqlalchemy.exc import SQLAlchemyError
-
 from src.infrastructure.persistence.db import SessionLocal
 from src.infrastructure.persistence.models import *
+from src.domain.services.hash import _hash_password
+from src.domain.services.generate_id import *
 from src.domain.services import *
-
-DATA_DIR = Path(__file__).parent / "seed"
+from src.config import SEED_DIR, Role
 
 def seed_data_from_csv(db):
     try:
         # Seed Courses
-        course_file = DATA_DIR / "courses.csv"
+        course_file = SEED_DIR / "courses.csv"
         if course_file.exists():
             df_courses = pd.read_csv(course_file)
             for _, row in df_courses.iterrows():
@@ -28,7 +27,7 @@ def seed_data_from_csv(db):
                 db.merge(course)
         
         # Seed Students
-        students_file = DATA_DIR / "students.csv"
+        students_file = SEED_DIR / "students.csv"
         if students_file.exists():
             df_students = pd.read_csv(students_file)
             for _, row in df_students.iterrows():
@@ -54,7 +53,7 @@ def seed_data_from_csv(db):
                 db.merge(student)
                 
         # Seed Departments
-        department_file = DATA_DIR / "departments.csv"
+        department_file = SEED_DIR / "departments.csv"
         if department_file.exists():
             df_departments = pd.read_csv(department_file)
             for _, row in df_departments.iterrows():
@@ -67,7 +66,7 @@ def seed_data_from_csv(db):
                 db.merge(department)
         
         # Seed Scores
-        score_file = DATA_DIR / "scores.csv"
+        score_file = SEED_DIR / "scores.csv"
         if score_file.exists():
             df_scores = pd.read_csv(score_file)
             for _, row in df_scores.iterrows():
@@ -85,7 +84,7 @@ def seed_data_from_csv(db):
         
 
         # Seed Registrations
-        registration_file = DATA_DIR / "registrations.csv"
+        registration_file = SEED_DIR / "registrations.csv"
         if registration_file.exists():   
             df_registrations = pd.read_csv(registration_file)
             for _, row in df_registrations.iterrows():
@@ -99,7 +98,7 @@ def seed_data_from_csv(db):
                 db.merge(registration)
                 
         # Seed teachers
-        teacher_file = DATA_DIR / "teachers.csv"
+        teacher_file = SEED_DIR / "teachers.csv"
         if teacher_file.exists():   
             df_teachers = pd.read_csv(teacher_file)
             for _, row in df_teachers.iterrows():
@@ -117,7 +116,7 @@ def seed_data_from_csv(db):
                 db.merge(teacher)
                 
         # Seed classrooms
-        classroom_file = DATA_DIR / "classrooms.csv"
+        classroom_file = SEED_DIR / "classrooms.csv"
         if classroom_file.exists():
             df_classrooms = pd.read_csv(classroom_file)
             for _, row in df_classrooms.iterrows():
@@ -133,6 +132,22 @@ def seed_data_from_csv(db):
                     end_time = compute_end_course(parse_date(row.get("start_time")))
                 )
                 db.merge(classroom)
+                
+        # Seed account
+        account_file = SEED_DIR / "account.csv"
+        if account_file.exists():   
+            df_accounts = pd.read_csv(account_file)
+            for _, row in df_accounts.iterrows():
+                if pd.isna(row.get("username")):
+                    continue
+                account = AccountModel(
+                    username=row.get("username"),
+                    role=Role(row.get("role")),
+                    password=_hash_password(row.get("password")),
+                    student_id=row.get("student_id",""),
+                    teacher_id=row.get("teacher_id","")
+                )
+                db.merge(account)
                    
         db.commit()
         print("✅ Seeding completed!\n")

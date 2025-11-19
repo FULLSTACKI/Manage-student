@@ -1,41 +1,45 @@
 from sqlalchemy.orm import Session
 from src.domain.repositories import IsOverviewKpiRepo
-from src.domain.entities.dtos import OverviewKpi, OverviewTopStudent
-from sqlalchemy import text
+from src.application.dtos.overview_dto import OverviewKpiResponse, OverviewTopStudent
+from src.infrastructure.persistence.models import StudentModel, CourseModel, ScoreModel, DepartmentModel
+from sqlalchemy import select, func
 from typing import List
 
 class OverviewRepo(IsOverviewKpiRepo):
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
-    def get_all_kpi(self) -> OverviewKpi:
+    def get_all_kpi(self) -> OverviewKpiResponse:
         try:
-            query = text("""
-                SELECT 
-                    (SELECT COUNT(student_id) FROM students) as total_student,
-                    (SELECT COUNT(course_id) FROM courses) as total_course,
-                    (SELECT AVG(gpa) FROM scores) as avg_gpa
-            """)
+            query = (
+                select(
+                    func.avg(ScoreModel.gpa).label("avg_gpa"),
+                    func.count(StudentModel.student_id).label("total_student"),
+                    func.count(CourseModel.course_id).label("total_course")
+                ).select_from(StudentModel)
+                .join(ScoreModel, StudentModel.student_id == ScoreModel.student_id)
+                .join(CourseModel, CourseModel.course_id == ScoreModel.course_id)
+            )
             result = self.db_session.execute(query).mappings().first()
-            return OverviewKpi(**result)
+            return OverviewKpiResponse(**result)
         except Exception as e:
             raise e  
         
     def get_top3_student(self) -> List[OverviewTopStudent]:
         try:
-            query = text("""
-                SELECT 
-                    st.student_id,
-                    st.student_name,
-                    st.birthday,
-                    sc.gpa,
-                    d.department_name
-                FROM students as st 
-                JOIN scores as sc ON sc.student_id = st.student_id 
-                JOIN departments as d ON d.department_id = st.department_id
-                ORDER BY sc.gpa DESC 
-                LIMIT 3 
-            """)
+            query = (
+                select(
+                    StudentModel.student_id,
+                    StudentModel.student_name,
+                    StudentModel.birthday,
+                    func.avg(ScoreModel.gpa).label("gpa"),
+                    DepartmentModel.department_name
+                ).select_from(StudentModel)
+                .join(ScoreModel, StudentModel.student_id == ScoreModel.student_id)
+                .join(DepartmentModel, StudentModel.department_id == DepartmentModel.department_id)
+                .group_by(StudentModel.student_id)
+                .order_by(func.avg(ScoreModel.gpa).desc())
+            )
             row_data = self.db_session.execute(query).mappings().all()
             return [OverviewTopStudent(**data) for data in row_data]
         except Exception as e:

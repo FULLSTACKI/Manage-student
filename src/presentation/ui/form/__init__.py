@@ -1,2 +1,4 @@
-from .upload.student import *
-from .view.student import *
+from .view import *
+from .history import *
+from .update import *
+from .upload import *

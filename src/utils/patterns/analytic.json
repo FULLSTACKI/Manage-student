@@ -4,19 +4,24 @@
         "dimensions": [
             {
                 "key": "department", 
-                "display": "Theo Khoa",
-                "valid_metrics": ["gpa", "student", "course", "final grade", "sex"] 
+                "display": "Khoa",
+                "valid_metrics": ["gpa", "student", "course", "final grade", "sex"]
             },
             {
                 "key": "course", 
-                "display": "Theo Khóa học",
-                "valid_metrics": ["gpa", "student", "final grade", "sex", "department"]
+                "display": "Môn học",
+                "valid_metrics": ["gpa", "student", "final grade", "sex"]
+            },
+            {
+                "key": "sex", 
+                "display": "Giới tính",
+                "valid_metrics": ["gpa", "student", "final grade", "department", "course"]
             }
         ],
         "metrics": [
             {   "key": "gpa",
                 "display": "Điểm GPA",
-                "allowed_agg": ["avg", "max", "min", "std"]
+                "allowed_agg": ["avg", "max", "min"]
             },
             {   "key": "student",
                 "display": "Sĩ số sinh viên",
@@ -36,9 +41,11 @@
             },
             {   "key": "final grade",
                 "display": "Điểm cuối kì",
-                "allowed_agg": ["avg", "max", "min", "std"]
+                "allowed_agg": ["avg", "max", "min"]
             }
-        ]
+        ],
+        "chart_type": ["Line Chart", "Bar Chart", "Scatter Plot", "Pie Chart"],
+        "export_type": [".xlsx", ".docx", ".pdf"]
     }
     
 ]

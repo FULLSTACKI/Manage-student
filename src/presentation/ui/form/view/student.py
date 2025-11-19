@@ -1,9 +1,9 @@
 import streamlit as st
 import requests
-from src.presentation.ui import api_base
+from src.config import API_BASE
 from ..update.student import update_student
-from src.presentation.ui.components import deleted
-import time     
+from src.presentation.ui.components import deleted_student
+from src.presentation.ui.utils import authenticated_request
 
 def view_student():
     st.subheader("📊 Thông tin Sinh viên")
@@ -20,8 +20,8 @@ def view_student():
             st.session_state.search_student = None
         else:
             try:
-                url = api_base.rstrip("/") + f"/student?student_id={student_id}"
-                resp = requests.get(url, timeout=10)
+                url = API_BASE.rstrip("/") + f"/students?student_id={student_id}"
+                resp = authenticated_request("GET", url, timeout=10)
                 resp.raise_for_status()
                 try:
                     data = resp.json()
@@ -90,6 +90,6 @@ def view_student():
                     update_student(old_student=student)
             with button_col1.container(width="stretch"):
                 if st.button("Xóa", key=f"delete_{student.get('student_id')}", type="primary", use_container_width=True):
-                    deleted(student_id=student.get("student_id"))
+                    deleted_student(student_id=student.get("student_id"))
     else:
         st.info("Chưa có tìm kiếm sinh viên nào!")

@@ -1,0 +1,1 @@
+from .student_event import set_up_events

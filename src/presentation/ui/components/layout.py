@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
-from src.presentation.ui import api_base
+from src.config import API_BASE
+from src.presentation.ui.utils import authenticated_request
 
 def footer():
     with st.container():
@@ -10,8 +11,8 @@ def footer():
 
 def _get_columns():
     try:
-        url = api_base.rstrip("/") + "/student/column"
-        response = requests.get(url, timeout=10)
+        url = API_BASE.rstrip("/") + "/students/column"
+        response = authenticated_request("GET",url, timeout=10)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -21,8 +22,8 @@ def _get_columns():
 def _get_filters(columns):
     try:
         col = ",".join(columns)
-        url = api_base.rstrip("/") + f"/student/filter?columns={col}"
-        response = requests.get(url, timeout=10)
+        url = API_BASE.rstrip("/") + f"/students/filter?columns={col}"
+        response = authenticated_request("GET",url, timeout=10)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -31,8 +32,8 @@ def _get_filters(columns):
     
 def _get_students(payload):
     try:
-        url = api_base.rstrip("/") + "/student/list"
-        response = requests.post(url, json=payload, timeout=10)
+        url = API_BASE.rstrip("/") + "/students/list"
+        response = authenticated_request("POST",url, json=payload, timeout=10)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -133,7 +134,6 @@ def table_detail_student():
     
     # --- Gọi API ---
     data_student = _get_students(payload)
-    
     # --- Mapping lại label cho bảng ---
     mapped_students = [
         {col["label"]: student.get(col["key"], None) for col in data_col["columns"] if col["label"] in selection}
@@ -141,3 +141,4 @@ def table_detail_student():
     ]
 
     st.table(mapped_students)
+    

@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from src.domain.entities.department import Department
-from src.domain.entities.dtos import *
 from typing import List
 
 class IsDepartmentRepo(ABC):

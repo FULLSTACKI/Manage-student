@@ -1,8 +1,8 @@
 import streamlit as st
 import requests  
-from datetime import datetime
-from src.presentation.ui import api_base
+from src.config import API_BASE
 from src.presentation.ui.components.layout import _get_filters
+from src.presentation.ui.utils import authenticated_request
                     
 def upload_student():
     st.subheader("Thêm Sinh viên mới")
@@ -89,8 +89,8 @@ def upload_student():
                 file_tuple = ("files", (file.name, file.getvalue(), file.type))
                 file_list_for_api.append(file_tuple)
             try:
-                url = api_base.rstrip("/") + "/student/import_file"
-                resp = requests.post(url, files=file_list_for_api, timeout=10)
+                url = API_BASE.rstrip("/") + "/students/import_file"
+                resp = authenticated_request("POST",url, files=file_list_for_api, timeout=10)
                 try:
                     data = resp.json()
                 except ValueError:
@@ -100,16 +100,6 @@ def upload_student():
                     if resp.status_code == 200 or resp.status_code == 201:
                         # Expecting structure like { "success": True, "message": "...", "score": {...} }
                         if isinstance(data, dict) and data.get("success", True):
-                            list_student = data["student"]
-                            
-                            for student in list_student:
-                                student.update({
-                                    "action_time": datetime.now(),
-                                    "action": "Thêm"
-                                })
-                            
-                            for student in list_student:
-                                st.session_state.history.append(student)
                             st.session_state.upload_success_msg = data.get("message")
                             st.session_state.upload_toast_msg = "💾 Đã lưu thông tin vào lịch sử."
                             st.rerun()
@@ -138,8 +128,8 @@ def upload_student():
                 "department_id": map_dept[department]["id"]
             }
             try:
-                url = api_base.rstrip("/") + "/student/upload"
-                resp = requests.post(url, json=payload, timeout=10)
+                url = API_BASE.rstrip("/") + "/students/upload"
+                resp = authenticated_request("POST",url, json=payload, timeout=10)
                 try:
                     data = resp.json()
                 except ValueError:
@@ -149,14 +139,7 @@ def upload_student():
                     if resp.status_code == 200 or resp.status_code == 201:
                         # Expecting structure like { "success": True, "message": "...", "score": {...} }
                         if isinstance(data, dict) and data.get("success", True):
-                            data["student"].update({
-                                "action_time": datetime.now(),
-                                "action": "Thêm"
-                            })
-                            upload_student = data["student"]
-                            if upload_student: 
-                                st.session_state.history.append(upload_student)
-                            st.session_state.upload_success_msg = f"Đã thêm thành công sinh viên ID: {upload_student.get("student_id")}"
+                            st.session_state.upload_success_msg = data.get("message")
                             st.session_state.upload_toast_msg = "💾 Đã lưu thông tin vào lịch sử."
                             st.rerun()
                         else:

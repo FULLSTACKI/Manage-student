@@ -1,16 +1,17 @@
 from pydantic import BaseModel
 from typing import *
+from datetime import date
 
 class OverviewKpiResponse(BaseModel):
-    total_student: str
-    total_course: str 
-    avg_gpa: str
+    total_student: Optional[float] | None
+    total_course: Optional[float] | None
+    avg_gpa: Optional[float] | None
     
 class OverviewTopStudent(BaseModel):
     student_id:str
     student_name:str
-    birthday:str
-    gpa:str
+    birthday:Optional[date] | None
+    gpa:Optional[float] | None
     department_name: str
     
 class OverviewResponse(BaseModel):

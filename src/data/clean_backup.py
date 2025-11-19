@@ -1,7 +1,7 @@
 import os
-from . import dir_path
+from src.config import BACKUP_DIR
 
-def cleanup_by_file_count(backup_dir=dir_path/"backups", max_files=10):
+def cleanup_by_file_count(backup_dir=BACKUP_DIR, max_files=10):
     
     if not os.path.exists(backup_dir):
         return

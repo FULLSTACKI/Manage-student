@@ -3,11 +3,11 @@ from sqlalchemy import event, inspect
 import json
 
 class AuditMixin:
-    @classmethod
-    def register_audit(cls, history_model):
+    @staticmethod
+    def register_audit(new_model, history_model):
         """Đăng ký sự kiện sao lưu dữ liệu khi update hoặc delete."""
         
-        @event.listens_for(cls, "before_update")
+        @event.listens_for(new_model, "before_update")
         def before_update(mapper, connection, target):
             state = inspect(target)
             changes = {}
@@ -20,6 +20,7 @@ class AuditMixin:
             connection.execute(
                 history_model.__table__.insert().values(
                         **{col.name: getattr(target, col.name) for col in mapper.columns},
+                        user_email= "admin@gmail.com",
                         action= "UPDATE",
                         changed_at= datetime.utcnow(),
                         old_val= json.dumps({k: v["old"] for k, v in changes.items()}, default= str),
@@ -27,13 +28,14 @@ class AuditMixin:
                 )
             )
                     
-        @event.listens_for(cls, "before_delete")
-        def before_delete(mapper, connection, target):
-            connection.execute(
-                history_model.__table__.insert().values(
-                        **{col.name: getattr(target, col.name) for col in mapper.columns},
-                        action= "DELETE",
-                        changed_at= datetime.utcnow(),
-                        old_val= json.dumps({col.name: getattr(target, col.name) for col in mapper.columns}, default= str),
-                )
-            )
+        # @event.listens_for(new_model, "before_delete")
+        # def before_delete(mapper, connection, target):
+        #     connection.execute(
+        #         history_model.__table__.insert().values(
+        #                 **{col.name: getattr(target, col.name) for col in mapper.columns},
+        #                 user_email= "admin@gmail.com",
+        #                 action= "DELETE",
+        #                 changed_at= datetime.utcnow(),
+        #                 old_val= json.dumps({col.name: getattr(target, col.name) for col in mapper.columns}, default= str),
+        #         )
+        #     )

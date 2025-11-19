@@ -3,3 +3,7 @@ from .department_mapper import *
 from .student_mapper import *
 from .score_mapper import *
 from .registration_mapper import *
+from .student_history_mapper import *
+from .student_query_mapper import *
+from .token_mapper import *
+from .chart_mapper import *

@@ -1,8 +1,8 @@
 import streamlit as st
 import requests  
-from datetime import datetime
-from src.presentation.ui import api_base
+from src.config import API_BASE
 from src.presentation.ui.components.layout import _get_filters
+from src.presentation.ui.utils import authenticated_request
 
 @st.dialog("Chỉnh sửa Thông tin Sinh viên", width="medium")
 def update_student(old_student=None):
@@ -108,8 +108,8 @@ def update_student(old_student=None):
                 "department_id": map_dept[department]["id"]
             }
             try:
-                url = api_base.rstrip("/") + "/student/update"
-                resp = requests.post(url, json=payload, timeout=10)
+                url = API_BASE.rstrip("/") + "/students/update"
+                resp = authenticated_request("POST",url, json=payload, timeout=10)
                 try:
                     data = resp.json()
                 except ValueError:
@@ -119,15 +119,8 @@ def update_student(old_student=None):
                     if resp.status_code == 200 or resp.status_code == 201:
                         # Expecting structure like { "success": True, "message": "...", "score": {...} }
                         if isinstance(data, dict) and data.get("success", True):
-                            data["student"].update({
-                                "action_time": datetime.now(),
-                                "action": "Chỉnh sửa"
-                            })
-                            edit_student = data["student"]
-                            if edit_student: 
-                                st.session_state.history.append(edit_student)
                             st.session_state.search_student = None
-                            st.session_state.success_msg = f"Đã chỉnh sửa thành công sinh viên ID: {edit_student.get("student_id")}"
+                            st.session_state.success_msg = data.get("message")
                             st.session_state.toast_msg = "💾 Đã lưu thông tin vào lịch sử."
                             st.rerun()
                         else:

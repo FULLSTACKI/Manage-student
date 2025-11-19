@@ -1,9 +1,9 @@
 import os 
 import shutil 
 from datetime import datetime
-from . import dir_path
+from src.config import SEED_DIR, BACKUP_DIR, DB_FILE_PATH
 
-def backup_csv(data_path=dir_path / "seed", backup_dir=dir_path/"backups/csv"):
+def backup_csv(data_path=SEED_DIR, backup_dir=BACKUP_DIR/"csv"):
     try:
         timestamp = datetime.now().strftime("%Y-%m-%d")
         destination = os.path.join(backup_dir, timestamp)
@@ -14,7 +14,7 @@ def backup_csv(data_path=dir_path / "seed", backup_dir=dir_path/"backups/csv"):
         raise e
     
     
-def backup_database(backup_dir: str =dir_path/ "backups", database_path:str = "./student_score.db"):
+def backup_database(backup_dir=BACKUP_DIR, database_path=DB_FILE_PATH):
     try:
         os.makedirs(backup_dir, exist_ok=True)
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

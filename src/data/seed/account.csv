@@ -1,0 +1,5 @@
+username,password,role,student_id,teacher_id
+admin,admin123,admin,
+S001,student123,student,S001
+S002,student123,student,S002
+S003,student123,student,S003

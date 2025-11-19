@@ -2,6 +2,7 @@ from datetime import date
 from src.utils.exceptions import ValidationError
 from src.domain.services.compare_date_service import parse_date
 from src.domain.services.age_service import compute_age
+from src.domain.services.generate_id import generate_student_code
 class Student:
     def __init__(
         self,
@@ -41,12 +42,57 @@ class Student:
 
     def _validate_domain_invariants(self):
         """Quy tắc bất biến"""
-        if self.age < 10:
+        if self.age < 18:
             raise ValidationError("AGE_INVALID")
         return None
 
     @classmethod
     def add(
+        cls,
+        name,
+        email,
+        birthday,
+        sex,
+        department_id,
+        birthplace,
+        address,
+        phone,
+        ethnicity,
+        religion,
+        id_card,
+        issue_date,
+        issue_place
+    ):
+        try:
+            id = generate_student_code()
+            birthday = parse_date(birthday)
+            age = compute_age(birthday)
+            if issue_date:
+                issue_date = parse_date(issue_date)
+        except Exception as e:
+            raise ValidationError("DATE_FORMAT_INVALID", detail=str(e))
+
+        new_student = cls(
+            id,
+            name,
+            email,
+            birthday,
+            age,
+            sex,
+            department_id,
+            birthplace,
+            address,
+            phone,
+            ethnicity,
+            religion,
+            id_card,
+            issue_date,
+            issue_place
+        )
+        return new_student
+    
+    @classmethod
+    def update(
         cls,
         id,
         name,

@@ -24,9 +24,9 @@ class DepartmentManagement:
         except Exception as e:
             # convert to app-level DB error
             raise ValidationError("DB_ERROR", detail=str(e))
-    
+
         Department_out = departmentOut.from_entity(Department_save)
-     
+        
         return UploadDepartmentResponse(
             success=True,
             message="Department uploaded successfully",

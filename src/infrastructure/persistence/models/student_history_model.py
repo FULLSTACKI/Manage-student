@@ -1,11 +1,13 @@
-from sqlalchemy import Column, String, Integer, Date, JSON, ForeignKey
+from sqlalchemy import Column, String, Integer, Date, ForeignKey, UUID
+import uuid
 from sqlalchemy.orm import relationship
 from src.infrastructure.persistence.models.audit_model import AuditBaseModel
 
 class StudentHistoryModel(AuditBaseModel):
     __tablename__ = "student_history"
 
-    student_id = Column(String, ForeignKey("students.student_id"))
+    id = Column(UUID, primary_key=True, default=uuid.uuid4)
+    student_id = Column(String, ForeignKey("students.student_id"),index=True, nullable=False)
     student_name = Column(String)
     email = Column(String)
     birthday = Column(Date)
@@ -21,4 +23,4 @@ class StudentHistoryModel(AuditBaseModel):
     issue_date = Column(String)
     issue_place = Column(String)
     
-    student = relationship("StudentModel", back_populates=None)
+    student = relationship("StudentModel", back_populates="histories")
