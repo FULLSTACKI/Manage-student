@@ -13,7 +13,7 @@ ANALYTIC_CONFIG = load_pattern("analytic")
 ERROR_CONFIG = load_pattern("error")
 FORMAT_CONFIG = load_pattern("formats")
 CONTENT_TYPE_CONFIG = load_pattern("content_type")
-INSIGHT_HISTORY_CONFIG = load_pattern("insight_history", folder_path=DATA_DIR)
+# INSIGHT_HISTORY_CONFIG = load_pattern("insight_history", folder_path=DATA_DIR)
 
 class Role(str, Enum):
     ADMIN = "admin"
