@@ -21,7 +21,7 @@ class StudentQueryRepo(IsStudentQueryRepo):
                     .join(DepartmentModel)
                     .join(RegistrationModel)
                     .join(CourseModel)
-                    .group_by(StudentModel.student_id, *columns)
+                    .distinct()
                 )
                 
                 if "departments" in col and department_id:
