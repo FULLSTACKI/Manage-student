@@ -6,7 +6,7 @@ if root_dir not in sys.path:
     sys.path.append(root_dir)
 
 import streamlit as st
-from src.config import API_BASE
+from src.presentation.ui.config import API_BASE
 import requests
 from src.config.settings import Role
 from src.presentation.ui.admin import *
