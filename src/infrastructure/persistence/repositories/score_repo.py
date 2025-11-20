@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from src.domain.repositories import IsScoreRepo
 from src.infrastructure.persistence.models import ScoreModel
+from src.infrastructure.persistence.mappers import ScoreMapper
 from src.domain.entities import Score
 
 class ScoreRepo(IsScoreRepo):
@@ -14,26 +15,18 @@ class ScoreRepo(IsScoreRepo):
             ScoreModel.course_id == course_id
         ).first()
         if score:
-            return _to_entity(score)
+            return ScoreMapper._to_entity(score)
         return None
 
     def save(self,req_score: Score) -> Score:
-        existing = self.get_by_id(req_score.student_id, req_score.course_id)
-
-        if existing:
-            existing.coursework_grade = req_score.coursework_grade
-            existing.midterm_grade = req_score.midterm_grade
-            existing.final_grade = req_score.final_grade
-            existing.gpa = req_score.gpa
-            save_score = _to_model(existing)
-        else:
-            save_score = _to_model(req_score)
-
+        existing = self.db.query(ScoreModel).filter(ScoreModel.course_id == req_score.course_id and ScoreModel.student_id == req_score.student_id).first()
         try:
-            persistent_obj = self.db.merge(save_score)
-            self.db.commit()
-            self.db.refresh(persistent_obj)
-            return _to_entity(persistent_obj)
+            if not existing:
+                save_score = ScoreMapper._to_model(req_score)
+                persistent = self.db.merge(save_score)
+                self.db.commit()
+                self.db.refresh(persistent)
+                return  req_score
         except IntegrityError as e:
             self.db.rollback()
             raise e

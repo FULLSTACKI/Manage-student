@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from src.infrastructure.persistence.mappers import CourseMapper
 from src.infrastructure.persistence.models import CourseModel
 from src.domain.repositories.course_repo import IsCourseRepo
 from src.domain.entities import Course
@@ -24,28 +25,18 @@ class CourseRepo(IsCourseRepo):
     def get_by_id(self, course_id: str) -> Course:
         course = self.db.query(CourseModel).filter(CourseModel.course_id == course_id).first()
         if course:
-            return _to_entity(course)
+            return CourseMapper._to_entity(course)
         return None
 
     def save(self, req_course: Course) -> Course:
-        existing = self.get_by_id(req_course.id)
-        
-        save_course = None 
-        
-        if existing:
-            existing.name = req_course.name
-            existing.credits = req_course.credits
-            existing.start_course = req_course.start_course 
-            existing.end_course = req_course.end_course
-            existing.department_id = req_course.department_id
-            save_course = _to_model(existing)
-        else: 
-            save_course = _to_model(req_course)
+        existing = self.db.query(CourseModel).filter(CourseModel.course_id == req_course.course_id).first()
         try:
-            persistent = self.db.merge(save_course)
-            self.db.commit()
-            self.db.refresh(persistent)
-            return _to_entity(persistent)
+            if not existing:
+                save_course = CourseMapper._to_model(req_course)
+                persistent = self.db.merge(save_course)
+                self.db.commit()
+                self.db.refresh(persistent)
+                return req_course
         except IntegrityError as e:
             errors = str(e)
             self.db.rollback()
@@ -57,5 +48,3 @@ class CourseRepo(IsCourseRepo):
         except Exception as e:
             self.db.rollback()
             raise e
-        
-        

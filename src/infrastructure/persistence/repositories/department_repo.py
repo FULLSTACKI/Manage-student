@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from src.infrastructure.persistence.mappers import DepartmentMapper
 from src.infrastructure.persistence.models import DepartmentModel
 from src.domain.repositories import IsDepartmentRepo
 from src.domain.entities import Department
@@ -24,24 +25,18 @@ class DepartmentRepo(IsDepartmentRepo):
     def get_by_id(self, Department_id: str) -> Department:
         data = self.db.query(DepartmentModel).filter(DepartmentModel.id == Department_id).first()
         if data:
-            return _to_entity(data)
+            return DepartmentMapper._to_entity(data)
         return None
 
     def save(self, req_Department: Department) -> Department:
-        existing = self.get_by_id(req_Department.id)
-        
-        save_Department = None 
-        
-        if existing:
-            existing.department_name = req_Department.department_name
-            save_Department = _to_model(existing)
-        else: 
-            save_Department = _to_model(req_Department)
-            self.db.add(save_Department)
+        existing = self.db.query(DepartmentModel).filter(DepartmentModel.department_id == req_Department.department_id).first()
         try:
-            self.db.commit()
-            self.db.refresh(save_Department)
-            return _to_entity(save_Department)
+            if not existing:
+                save_department = DepartmentMapper._to_model(req_Department)
+                persistent = self.db.merge(save_department)
+                self.db.commit()
+                self.db.refresh(persistent)
+                return req_Department
         except IntegrityError as e:
             errors = str(e)
             self.db.rollback()

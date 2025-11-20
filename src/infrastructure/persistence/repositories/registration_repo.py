@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from src.domain.entities import Registration
 from src.infrastructure.persistence.models import RegistrationModel
+from src.infrastructure.persistence.mappers import RegistrationMapper
 from src.domain.repositories import IsRegistrationRepo
 
 class RegistrationRepo(IsRegistrationRepo):
@@ -13,14 +15,21 @@ class RegistrationRepo(IsRegistrationRepo):
             RegistrationModel.course_id == course_id
         ).first()
         if reg:
-            return _to_entity(reg)
+            return RegistrationMapper._to_entity(reg)
         return None
 
-    def save(self, reg: Registration) -> Registration:
-        existing = self.get_by_id(reg.student_id, reg.course_id)
-        if not existing:
-            self.db.add(_to_model(reg))
-            self.db.commit()
-            self.db.refresh(_to_model(reg))
-            return reg
-        return None 
+    def save(self, req: Registration) -> Registration:
+        existing = self.db.query(RegistrationModel).filter(RegistrationModel.course_id == req.course_id and RegistrationModel.student_id == req.student_id).first()
+        try:
+            if not existing:
+                save_regis = RegistrationMapper._to_model(req)
+                persistent = self.db.merge(save_regis)
+                self.db.commit()
+                self.db.refresh(persistent)
+                return  req
+        except IntegrityError as e:
+            self.db.rollback()
+            raise e
+        except Exception as e:
+            self.db.rollback()
+            raise e
