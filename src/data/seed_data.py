@@ -135,7 +135,7 @@ def seed_data_from_csv(db):
                 
         # Seed account
         account_file = SEED_DIR / "account.csv"
-        if account_file.exists():   
+        if account_file.exists():
             df_accounts = pd.read_csv(account_file)
             for _, row in df_accounts.iterrows():
                 if pd.isna(row.get("username")):
@@ -148,7 +148,7 @@ def seed_data_from_csv(db):
                     teacher_id=row.get("teacher_id","")
                 )
                 db.merge(account)
-                   
+
         db.commit()
         print("✅ Seeding completed!\n")
     except SQLAlchemyError as e:

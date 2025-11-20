@@ -5,8 +5,8 @@ import uuid
 
 class StudentModel(Base):
     __tablename__ = "students"
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = Column(String(50), unique=True, index=True, nullable=False)
+    # id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    student_id = Column(String(50),primary_key=True)
     student_name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False, index=True)
     birthday = Column(Date, nullable=False)

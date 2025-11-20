@@ -1,13 +1,13 @@
-from sqlalchemy import Column, String, Float, ForeignKey, UUID   
+from sqlalchemy import Column, String, Float, ForeignKey, UUID
 import uuid
 from sqlalchemy.orm import relationship
-from src.infrastructure.persistence.db import Base    
+from src.infrastructure.persistence.db import Base
 
 class ScoreModel(Base):
     __tablename__ = "scores"
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = Column(String, ForeignKey("students.student_id"), primary_key=True)
-    course_id = Column(String, ForeignKey("courses.course_id"), primary_key=True)
+    # id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    student_id = Column(String, ForeignKey("students.student_id"), index=True, nullable=False)
+    course_id = Column(String, ForeignKey("courses.course_id"), index=True, nullable=False)
     coursework_grade = Column(Float, nullable=False)
     midterm_grade = Column(Float, nullable=False)
     final_grade = Column(Float, nullable=False)

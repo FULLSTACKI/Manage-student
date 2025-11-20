@@ -5,13 +5,12 @@ import uuid
 
 class AccountModel(Base):
     __tablename__ = "accounts"
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    username = Column(String, unique=True, index=True, nullable=False)
+    # id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    username = Column(String, primary_key=True)
     password = Column(String, nullable=False)
     role = Column(String, nullable=False)
-    student_id = Column(String, ForeignKey("students.student_id"), nullable=True)
-    teacher_id = Column(String, ForeignKey("teachers.teacher_id"), nullable=True) 
-    
+    student_id = Column(String, ForeignKey("students.student_id"),index=True, nullable=True)
+    teacher_id = Column(String, ForeignKey("teachers.teacher_id"),index=True, nullable=True)
 
     student = relationship("StudentModel", back_populates="account")
-    teacher = relationship("TeacherModel", back_populates="account") 
+    teacher = relationship("TeacherModel", back_populates="account")

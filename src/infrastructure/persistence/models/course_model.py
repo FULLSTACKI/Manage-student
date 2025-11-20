@@ -5,8 +5,8 @@ from src.infrastructure.persistence.db import Base
 
 class CourseModel(Base):
     __tablename__ = "courses"
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    course_id = Column(String, unique=True, index=True)
+    # id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    course_id = Column(String,primary_key=True)
     course_name = Column(String, nullable=False)
     credits = Column(Integer, nullable=False)
     start_course = Column(Date, nullable=False)
