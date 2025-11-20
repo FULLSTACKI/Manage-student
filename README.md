@@ -192,6 +192,23 @@ doAnCuoiKhoa/
 
    >![Kết quả báo cáo](docs/ui/report.png)
 
+## 🌐 Link Demo & Triển khai (Deployment)
+
+Dưới đây là đường dẫn truy cập hệ thống đã được triển khai thực tế trên môi trường Cloud:
+
+| Thành phần | Đường dẫn truy cập | Ghi chú |
+| :--- | :--- | :--- |
+| **Frontend (Web App)** | 👉 [**https://manage-student-nhuthao.streamlit.app**](https://manage-student-nhuthao.streamlit.app) | **Giao diện chính.** Dành cho người dùng cuối. |
+| **Backend (API Docs)** | 👉 [**https://manage-student-23ps.onrender.com/docs**](https://manage-student-23ps.onrender.com/docs) | Tài liệu kỹ thuật API (Swagger UI). |
+| **Source Code** | 👉 [**Link GitHub của bạn**](https://github.com/FULLSTACKI/Manage-student) | Kho mã nguồn dự án. |
+
+> [!WARNING]
+> **⚠️ Lưu ý quan trọng về Server Miễn phí:**
+> Do dự án sử dụng gói **Render Free Tier** và **Streamlit Cloud**, hệ thống sẽ tự động "ngủ đông" sau 15 phút không hoạt động.
+> * **Hiện tượng:** Lần truy cập đầu tiên có thể mất khoảng **50 giây - 1 phút** để Server khởi động lại.
+> * **Khắc phục:** Nếu thấy web load lâu, xin thầy/cô vui lòng kiên nhẫn chờ một chút, các lần truy cập sau sẽ nhanh bình thường.
+> * **Đối với Streamlit:** Nếu thấy màn hình thông báo *"This app is in the oven"* hoặc *"Sleeping"*, vui lòng bấm nút **"Yes, get this app back up"**.
+
 # 👨‍💻 Tác giả
 * **Trần Như Thao**
 * **Email: tranthicuc03032017@gmail.com**
