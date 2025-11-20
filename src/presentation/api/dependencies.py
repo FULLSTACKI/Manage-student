@@ -108,3 +108,6 @@ def get_analytic_service(
 
 def get_overview_service(overview_repo: IsOverviewKpiRepo = Depends(get_overview_repo)) -> OverviewManagement:
     return OverviewManagement(overview_repo=overview_repo)
+
+def get_registration_service(regis_repo: IsRegistrationRepo = Depends(get_registration_repo)) -> RegistrationManagement:
+    return RegistrationManagement(regis_repo=regis_repo)

@@ -10,3 +10,4 @@ from .account_dto import *
 from .token_dto import *
 from .plot_chart_dto import *
 from .export_dto import *
+from .registration_dto import *

@@ -8,3 +8,4 @@ from .student_history import *
 from .student_query import *
 from .student_import_file import *
 from .account import *
+from .registration import *
