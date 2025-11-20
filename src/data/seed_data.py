@@ -144,8 +144,8 @@ def seed_data_from_csv(db):
                     username=row.get("username"),
                     role=Role(row.get("role")),
                     password=_hash_password(row.get("password")),
-                    student_id=row.get("student_id","None"),
-                    teacher_id=row.get("teacher_id","None")
+                    student_id=row.get("student_id",None),
+                    teacher_id=row.get("teacher_id",None)
                 )
                 db.merge(account)
 
