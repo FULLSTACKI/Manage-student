@@ -5,5 +5,4 @@ from .student import Student
 from .registration import Registration
 from .teacher import Teacher
 from .classroom import Classroom
-from .cover_letter import CoverLetterProcessor
 from .account import Account

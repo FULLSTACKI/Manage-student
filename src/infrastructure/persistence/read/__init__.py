@@ -1,0 +1,1 @@
+from .cover_letter import CoverLetterProcessor

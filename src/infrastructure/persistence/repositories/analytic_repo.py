@@ -21,10 +21,13 @@ class AnalyticRepo(IsAnalyticRepo):
                     dimension.label(dimensions),
                     metric_val.label(metrics)
                 )
+            )
+            stmt = BuildQueryModel.apply_joins(stmt, dimension, metric)
+            stmt = (
+                stmt
                 .group_by(dimension)
                 .order_by(metric_val.desc())
             )
-            stmt = BuildQueryModel.apply_joins(stmt, dimension, metric)
             result_query = self.db.execute(stmt).mappings().all()
             return result_query
         except IntegrityError as e:

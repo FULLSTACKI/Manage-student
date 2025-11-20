@@ -1,7 +1,9 @@
 from src.domain.repositories import IsStudentCommandRepo
-from ..dtos.student_command_dto import *
-from src.domain.entities import  Student, CoverLetterProcessor
+from src.application.dtos.student_command_dto import *
+from src.domain.entities import  Student
+from src.infrastructure.persistence.read import CoverLetterProcessor
 from src.utils.validators import validate_sex
+from src.utils.exceptions import ValidationError
 from fastapi import UploadFile
 from src.config import DOCX_CONFIG
 from typing import List
@@ -27,32 +29,38 @@ class StudentImportFileManagement:
             if not list_text:
                 raise ValueError("Không trích xuất được văn bản nào từ file.")
 
-            students_entity = [] 
+            students_entity = []
+            errors = []
             
-            for text in list_text:
-                new_id = f"S{shortuuid.uuid()[:8].upper()}"
-                new_email = f"{new_id}@gmail.com" 
-                dept_id = text.get("department_id", "D001")
+            for index, row in list_text:
+                try:
+                    new_id = f"S{shortuuid.uuid()[:8].upper()}"
+                    new_email = f"{new_id}@gmail.com" 
+                    dept_id = row.get("department_id", "D001")
 
-                entity = Student.add(
-                    name=text.get("student_name"),
-                    email=new_email,
-                    birthday=text.get("birthday"),
-                    sex=text.get("sex") if validate_sex(text.get("sex")) else "M",
-                    birthplace = text.get("birthplace"),
-                    address = text.get("address"),
-                    phone = text.get("phone"),
-                    ethnicity = text.get("ethnicity"),
-                    religion = text.get("religion"),
-                    id_card = text.get("id_card"),
-                    issue_date = text.get("issue_date"),
-                    issue_place = text.get("issue_place"),
-                    department_id=dept_id
-                )
-                students_entity.append(entity)
-            
-            if not students_entity:
-                raise ValueError("Error mapper: Không trích xuất được entity nào")
+                    entity = Student.add(
+                        name=row.get("student_name"),
+                        email=new_email,
+                        birthday=row.get("birthday"),
+                        sex=row.get("sex") if validate_sex(row.get("sex")) else "M",
+                        birthplace = row.get("birthplace"),
+                        address = row.get("address"),
+                        phone = row.get("phone"),
+                        ethnicity = row.get("ethnicity"),
+                        religion = row.get("religion"),
+                        id_card = row.get("id_card"),
+                        issue_date = row.get("issue_date"),
+                        issue_place = row.get("issue_place"),
+                        department_id=dept_id
+                    )
+                    students_entity.append(entity)
+                except ValidationError as e:
+                    error_detail = {
+                        "row_index": index + 1,  # Dòng thứ mấy trong file
+                        "student_name": row.get("student_name", "Unknown"),
+                        "reason": str(e) # Lỗi gì (ví dụ: AGE_INVALID)
+                    }
+                    errors.append(error_detail)
             
             list_student_saved = []
             for student_ent in students_entity:
