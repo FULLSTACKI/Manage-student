@@ -15,15 +15,15 @@ def on_startup():
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     seed_data_if_empty()
-    _do_backup()
-    cleanup_by_file_count()
+    # _do_backup()
+    # cleanup_by_file_count()
     set_up_events()
-    print("✅ Database initialized and backup created.")
+    print("✅ Database initialized")
     
-@app.on_event("shutdown")
-def on_shutdown():
-    _do_backup()
-    print("👋 Application shutting down, final backup done!")
+# @app.on_event("shutdown")
+# def on_shutdown():
+#     _do_backup()
+#     print("👋 Application shutting down, final backup done!")
     
 
 for router in list_routers:
