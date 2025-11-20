@@ -21,7 +21,7 @@ class AnalyticRepo(IsAnalyticRepo):
                     dimension.label(dimensions),
                     metric_val.label(metrics)
                 )
-                .group_by(dimension)
+                .group_by(dimension,metric)
                 .order_by(metric_val.desc())
             )
             stmt = BuildQueryModel.apply_joins(stmt, dimension, metric)

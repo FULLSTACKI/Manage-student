@@ -37,7 +37,12 @@ class OverviewRepo(IsOverviewKpiRepo):
                 ).select_from(StudentModel)
                 .join(ScoreModel, StudentModel.student_id == ScoreModel.student_id)
                 .join(DepartmentModel, StudentModel.department_id == DepartmentModel.department_id)
-                .group_by(StudentModel.student_id)
+                .group_by(
+                    StudentModel.student_id,
+                    StudentModel.student_name,
+                    StudentModel.birthday,
+                    DepartmentModel.department_name
+                )
                 .order_by(func.avg(ScoreModel.gpa).desc())
             )
             row_data = self.db_session.execute(query).mappings().all()
