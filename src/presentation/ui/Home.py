@@ -88,7 +88,7 @@ def show_login_page():
             }
             try:
                 url = API_BASE.rstrip("/") + "/auth/login"
-                resp = requests.post(url, data=payload, timeout=10)
+                resp = requests.post(url, json=payload, timeout=20)
                 try:
                     data = resp.json()
                 except ValueError:
