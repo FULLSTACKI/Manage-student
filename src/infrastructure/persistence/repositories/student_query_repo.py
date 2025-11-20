@@ -21,7 +21,7 @@ class StudentQueryRepo(IsStudentQueryRepo):
                     .join(DepartmentModel)
                     .join(RegistrationModel)
                     .join(CourseModel)
-                    .group_by(StudentModel.student_id)
+                    .group_by(StudentModel.student_id, *columns)
                 )
                 
                 if "departments" in col and department_id:
@@ -30,7 +30,6 @@ class StudentQueryRepo(IsStudentQueryRepo):
                     stmt = stmt.where(RegistrationModel.course_id.in_(course_id))
 
                 data_row = self.db_session.execute(stmt).mappings().all()
-                # print("Analytic query result:", stmt.compile(compile_kwargs={"literal_binds": True}))
                 return [studentOut(**data) for data in data_row]
             except Exception as e:
                 raise e 

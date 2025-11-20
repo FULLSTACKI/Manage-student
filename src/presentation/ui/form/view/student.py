@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-from src.config import API_BASE
+from src.presentation.ui.config import API_BASE
 from ..update.student import update_student
 from src.presentation.ui.components import deleted_student
 from src.presentation.ui.utils import authenticated_request

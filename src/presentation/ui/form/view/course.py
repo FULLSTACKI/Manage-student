@@ -2,7 +2,7 @@ import streamlit as st
 from src.presentation.ui.utils import authenticated_request
 from ..update.course import update_course
 import requests
-from src.config.settings import API_BASE
+from src.presentation.ui.config import API_BASE
 
 def view_course():
     st.subheader("📊 Thông tin Môn học")

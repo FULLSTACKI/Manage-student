@@ -1,5 +1,5 @@
 import streamlit as st
-from src.config import API_BASE
+from src.presentation.ui.config import API_BASE
 from src.presentation.ui.utils import authenticated_request
 import requests
 

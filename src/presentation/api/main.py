@@ -12,7 +12,7 @@ app = FastAPI(title="Student Score Management API")
 @app.on_event("startup")
 def on_startup():
     print("🚀 Starting application...")
-    Base.metadata.drop_all(bind=engine)
+    # Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     seed_data_if_empty()
     # _do_backup()

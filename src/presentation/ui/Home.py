@@ -88,7 +88,7 @@ def show_login_page():
             }
             try:
                 url = API_BASE.rstrip("/") + "/auth/login"
-                resp = requests.post(url, json=payload, timeout=10)
+                resp = requests.post(url, data=payload, timeout=10)
                 try:
                     data = resp.json()
                 except ValueError:
@@ -137,8 +137,6 @@ def main():
                 view_scores_ui()
             elif selected_page == "Thời khóa biểu":
                 view_timetable_ui()
-
-
 
 if __name__ == "__main__":
     main()

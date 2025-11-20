@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 from src.presentation.ui.components import footer
 from src.presentation.ui.utils.api_helper import authenticated_request
-from src.config import API_BASE
+from src.presentation.ui.config import API_BASE
 from PIL import Image
 
 # --- Khởi tạo session state ---
@@ -49,29 +49,6 @@ def _post_query(req: dict):
     except requests.RequestException as e:
         st.error(f"Failed to connect to API: {e}")
         return None
-
-# @st.cache_data
-# def _plot_chart(req: dict):
-#     try:
-#         url = API_BASE.rstrip("/") + "/overview/plot_chart"
-#         resp = authenticated_request("POST",url, json=req, timeout=10)
-#         resp.raise_for_status()
-#         return resp.json()
-#     except requests.RequestException as e:
-#         st.error(f"Failed to connect to API: {e}")
-#         return None
-
-# @st.cache_data
-# def _generate_insight(data: list[dict]):
-#     with st.spinner("Đang phân tích dữ liệu ..."):
-#         try:
-#             url = API_BASE.rstrip("/") + "/overview/generate_insight"
-#             resp = authenticated_request("POST",url, json=data, timeout=60)
-#             resp.raise_for_status()
-#             return resp.json()
-#         except requests.RequestException as e:
-#             st.error(f"Failed to connect to API: {e}")
-#             return None
 
 def _export(req: dict):
     with st.spinner(f"Đang tạo file {req.get("type")}, vui lòng chờ..."):
