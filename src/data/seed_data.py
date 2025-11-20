@@ -137,6 +137,7 @@ def seed_data_from_csv(db):
         account_file = SEED_DIR / "account.csv"
         if account_file.exists():
             df_accounts = pd.read_csv(account_file)
+            df_accounts = df_accounts.where(pd.notnull(df_accounts), None)
             for _, row in df_accounts.iterrows():
                 if pd.isna(row.get("username")):
                     continue
@@ -144,8 +145,8 @@ def seed_data_from_csv(db):
                     username=row.get("username"),
                     role=Role(row.get("role")),
                     password=_hash_password(row.get("password")),
-                    student_id=row.get("student_id",None),
-                    teacher_id=row.get("teacher_id",None)
+                    student_id=row.get("student_id"),
+                    teacher_id=row.get("teacher_id")
                 )
                 db.merge(account)
 
