@@ -9,8 +9,8 @@ class AccountModel(Base):
     username = Column(String, primary_key=True)
     password = Column(String, nullable=False)
     role = Column(String, nullable=False)
-    student_id = Column(String, ForeignKey("students.student_id"),index=True, nullable=True)
-    teacher_id = Column(String, ForeignKey("teachers.teacher_id"),index=True, nullable=True)
+    student_id = Column(String, ForeignKey("students.student_id"),index=True, unique=True)
+    teacher_id = Column(String, ForeignKey("teachers.teacher_id"),index=True, unique=True)
 
     student = relationship("StudentModel", back_populates="account")
     teacher = relationship("TeacherModel", back_populates="account")
